@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div>
-        <h1> Welcome to Encom! </h1>
+        <h1>Welcome to Encom!</h1>
       </div>
     </>
   )
