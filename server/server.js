@@ -12,7 +12,7 @@ app.use(morgam('dev'))
 
 // Connect to DB
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGO_URI)
 
 const CONNECTION = mongoose.connection
 CONNECTION.on('error', console.error.bind(console, 'MongoDB connection error: \n'))
@@ -21,7 +21,7 @@ CONNECTION.once('open', () => {
 })
 
 
-// Test route
+// Test route - to make sure server is running
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 import routes from './routes/v1/routes.js'
 
 app.use('/api/v1', routes)
-
 
 
 

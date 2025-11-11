@@ -17,15 +17,15 @@ export const getAllUsers = async (req, res) => {
 }
 
 // Get user by USERNAME
-export const getUserById = async (req, res) => {
+export const getUserByUsername = async (req, res) => {
 
   const USERNAME = req.params.username
 
     try {
-        const user = await User.findOne({ username: USERNAME })
+        const user = await User.findOne({ username: USERNAME.toLowerCase() })
 
         if (!user) {
-            return res.status(404).json({ message: 'User not found' })
+            return res.status(404).json({ message: `User ${USERNAME} not found` })
         }
 
         res.status(200).json(user)
@@ -37,14 +37,18 @@ export const getUserById = async (req, res) => {
 // Create a new user
 export const createUser = async (req, res) => {
     try {
-        const { username, email, password, bio, picture } = req.body
+        const { username, email, password } = req.body
 
         const existingUser = await User.findOne({ $or: [ { username }, { email } ] })
         if (existingUser) {
             return res.status(400).json({ message: 'Username or email already exists' })
         }
 
-        const newUser = new User({ username, email, password, bio, picture })
+        const newUser = new User({
+          username: username.toLowerCase(), // Currently saving usernames as lowercase to avoid case sensitivity issues
+          email,
+          password
+        })
         await newUser.save()
 
         res.status(201).json({ user: newUser })

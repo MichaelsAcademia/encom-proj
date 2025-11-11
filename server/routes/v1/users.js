@@ -1,7 +1,7 @@
 import express from 'express'
 import {
   getAllUsers,
-  getUserById,
+  getUserByUsername,
   createUser,
   updateUser,
   deleteUser
@@ -11,7 +11,7 @@ const userRoutes = express.Router()
 
 // Routes
 userRoutes.get('/', getAllUsers)
-userRoutes.get('/:username', getUserById)
+userRoutes.get('/:username', getUserByUsername)
 userRoutes.post('/', createUser)
 userRoutes.put('/:username', updateUser)
 userRoutes.delete('/:username', deleteUser)
