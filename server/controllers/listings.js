@@ -1,6 +1,6 @@
 import Listing from "../models/listings.js";
 
-// GET /listings – Fetch all listings
+// ✅ GET /listings – Fetch all listings
 export const getListings = async (req, res) => {
   try {
     const listings = await Listing.find();
@@ -11,7 +11,7 @@ export const getListings = async (req, res) => {
   }
 };
 
-// GET /listings/:id – Fetch single listing
+// ✅ GET /listings/:id – Fetch single listing
 export const getListingById = async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
@@ -23,7 +23,7 @@ export const getListingById = async (req, res) => {
   }
 };
 
-// POST /listings – Create new listing
+// ✅ POST /listings – Create new listing
 export const createListing = async (req, res) => {
   try {
     const { title, description, price, category, images, quantity, sellerId } = req.body;
@@ -48,7 +48,7 @@ export const createListing = async (req, res) => {
   }
 };
 
-// PUT /listings/:id – Update existing listing
+// ✅ PUT /listings/:id – Update existing listing
 export const updateListing = async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
@@ -62,7 +62,7 @@ export const updateListing = async (req, res) => {
   }
 };
 
-// DELETE /listings/:id – Delete listing
+// ✅ DELETE /listings/:id – Delete listing
 export const deleteListing = async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
