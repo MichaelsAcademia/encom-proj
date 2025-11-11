@@ -6,13 +6,12 @@ import {
   updateListing,
   deleteListing,
 } from "../../controllers/listings.js";
-//import { protect } from "../../middleware/authMiddleware.js"; 
+//import { protect } from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", getListings);
 router.get("/:id", getListingById);
-
 router.post("/", createListing);
 router.put("/:id", updateListing);
 router.delete("/:id", deleteListing);
