@@ -1,5 +1,7 @@
 import Review from '../models/reviews.js'
 
+
+//Get all Reviews
 export const getAllReviews = async (req, res) => {
     try {
         const {sellerId, orderId} = req.query;
@@ -18,6 +20,8 @@ export const getAllReviews = async (req, res) => {
             }
         }   
 
+
+//Get reviews by ID
 export const getReviewById = async (req, res) => {
     try{
         const review = await Review.findOne({reviewId: req.params.id});
@@ -30,6 +34,8 @@ export const getReviewById = async (req, res) => {
             }
         }
 
+
+//Create Review
     export const  createReview = async (req, res) => {
         try {
             const { reviewId, sellerId, orderId, rating, comment} = req.body;
@@ -53,6 +59,8 @@ export const getReviewById = async (req, res) => {
        }
     }
 
+
+//Update Review
     export const updatedReview = async (req, res) => {
         try {
         const updatedReview = await Review.findOneAndUpdate(
@@ -68,7 +76,9 @@ export const getReviewById = async (req, res) => {
         res.status(500).json({message: error.message})
         }
     }
-    
+
+
+//Delete Review
     export const deletedReview = async (req, res) => {
         try{
             const deletedReview = await Review.findOneAndDelete({reviewId: req.params.id});
