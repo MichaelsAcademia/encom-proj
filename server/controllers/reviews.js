@@ -32,14 +32,14 @@ export const getReviewById = async (req, res) => {
 
     export const  createReview = async (req, res) => {
         try {
-            const { reviewerId, sellerId, orderId, rating, comment} = req.body
+            const { reviewId, sellerId, orderId, rating, comment} = req.body
 
-            if (!reviewerId || !sellerId || !orderId || rating == null){
+            if (!reviewId || !sellerId || !orderId || rating == null){
                 res.status(400).json({message: 'Missing required fields. Please enter all required fields'})
             }
 
         const newReview = new Review({
-            reviewerId,
+            reviewId,
             sellerId,
             orderId,
             rating,
