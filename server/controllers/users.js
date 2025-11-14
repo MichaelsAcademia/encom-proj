@@ -33,37 +33,14 @@ export const getUserByUsername = async (req, res) => {
     }
 }
 
-// Create a new user
-export const createUser = async (req, res) => {
-    try {
-        const { username, email, password } = req.body
-
-        const existingUser = await User.findOne({ $or: [ { username }, { email } ] })
-        if (existingUser) {
-            return res.status(400).json({ message: 'Username or email already exists' })
-        }
-
-        const newUser = new User({
-          username: username.toLowerCase(), // Currently saving usernames as lowercase to avoid case sensitivity issues
-          email,
-          password
-        })
-        await newUser.save()
-
-        res.status(201).json({ user: newUser })
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-}
-
 // update user
 export const updateUser = async (req, res) => {
     const USERNAME = req.params.username
 
     try {
         const updatedUser = await User.findOneAndUpdate(
-            { username: USERNAME },
-            req.body,
+            { username: USERNAME.toLowerCase() },
+            {$set: req.body},
             { new: true }
         )
 
@@ -82,7 +59,7 @@ export const deleteUser = async (req, res) => {
     const USERNAME = req.params.username
 
     try {
-        const deletedUser = await User.findOneAndDelete({ username: USERNAME })
+        const deletedUser = await User.findOneAndDelete({ username: USERNAME.toLowerCase() })
 
         if (!deletedUser) {
             return res.status(404).json({ message: 'User not found' })

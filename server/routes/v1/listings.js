@@ -6,15 +6,15 @@ import {
   updateListing,
   deleteListing,
 } from "../../controllers/listings.js";
-//import { protect } from "../../middleware/authMiddleware.js";
+import { protect } from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.get("/", getListings);
 router.get("/:id", getListingById);
-router.post("/", createListing);
-router.put("/:id", updateListing);
-router.delete("/:id", deleteListing);
+router.post("/", protect, createListing);
+router.put("/:id", protect, updateListing);
+router.delete("/:id", protect, deleteListing);
 
 
 export default router;

@@ -15,16 +15,16 @@ export const getAllReviews = async (req, res) => {
         if(!reviews || reviews.length ===0){
             return res.status(404).json({message: 'No reviews found'})
         } res.status(200).json(reviews)}
-            catch (error){
+        catch (error){
             res.status(500).json({message: error.message})
-            }
-        }   
+        }
+}
 
 
 //Get reviews by ID
 export const getReviewById = async (req, res) => {
     try{
-        const review = await Review.findOne({reviewId: req.params.id});
+        const review = await Review.findById(req.params.id);
 
         if (!review){
             return res.status(404).json({message: 'Review not found'})
@@ -38,14 +38,14 @@ export const getReviewById = async (req, res) => {
 //Create Review
     export const  createReview = async (req, res) => {
         try {
-            const { reviewId, sellerId, orderId, rating, comment} = req.body;
+            const { reviewerId, sellerId, orderId, rating, comment} = req.body;
 
-            if (!reviewId || !sellerId || !orderId || rating == null){
+            if (!reviewerId || !sellerId || !orderId || rating == null){
                 res.status(400).json({message: 'Missing required fields. Please enter all required fields'})
             }
 
         const newReview = new Review({
-            reviewId,
+            reviewerId,
             sellerId,
             orderId,
             rating,
@@ -63,8 +63,8 @@ export const getReviewById = async (req, res) => {
 //Update Review
     export const updatedReview = async (req, res) => {
         try {
-        const updatedReview = await Review.findOneAndUpdate(
-           {reviewId: req.params.id}, req.body, {new: true}
+        const updatedReview = await Review.findByIdAndUpdate(
+           req.params.id, req.body, {new: true}
         )
 
         if (!updatedReview){
@@ -81,7 +81,7 @@ export const getReviewById = async (req, res) => {
 //Delete Review
     export const deletedReview = async (req, res) => {
         try{
-            const deletedReview = await Review.findOneAndDelete({reviewId: req.params.id});
+            const deletedReview = await Review.findByIdAndDelete(req.params.id);
 
         if(!deletedReview){
             return res.status(404).json({message: 'Review not found'})
@@ -92,4 +92,3 @@ export const getReviewById = async (req, res) => {
         res.status(500).json({message: error.message})
         }
 }
-        
