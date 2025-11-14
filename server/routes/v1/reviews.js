@@ -7,7 +7,6 @@ import {
   updatedReview,
   deletedReview,
 } from "../../controllers/reviews.js";
-//import { protect } from "../../middleware/authMiddleware.js";
 
 const router = express.Router();
 
