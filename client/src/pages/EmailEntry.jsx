@@ -1,13 +1,13 @@
+// client/src/pages/EmailEntry.jsx
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+const API = "http://localhost:3000/api/v1/auth/check-email";
 
 export default function EmailEntry() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -15,33 +15,27 @@ export default function EmailEntry() {
     e.preventDefault();
 
     if (!email.trim()) {
-      setError("Please enter your email address.");
+      setError("Please enter your email.");
       return;
     }
 
-    setLoading(true);
-    setError("");
-
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/v1/auth/check-email`, {
-        email,
-      });
+      // Save email for autofill
+      sessionStorage.setItem("entryEmail", email.trim());
 
-      const exists = res.data.exists;
+      // Check if email exists in DB
+      const res = await axios.post(API, { email: email.trim() });
 
-      // SAVE email temporarily for login/register screens
-      sessionStorage.setItem("entryEmail", email);
-
-      if (exists) {
-        navigate("/login");
+      if (res.data.exists === true) {
+        // user already registered → go to login with query param
+        navigate(`/login?email=${encodeURIComponent(email.trim())}`);
       } else {
-        navigate("/register");
+        // new user → go to signup with query param
+        navigate(`/signup?email=${encodeURIComponent(email.trim())}`);
       }
     } catch (err) {
       console.error(err);
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+      setError("Something went wrong.");
     }
   };
 
@@ -55,7 +49,7 @@ export default function EmailEntry() {
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-label">
-            Your Email
+            Email
             <input
               type="email"
               className="auth-input"
@@ -66,16 +60,22 @@ export default function EmailEntry() {
             />
           </label>
 
-          <button className="auth-button" disabled={loading}>
-            {loading ? "Checking..." : "Continue"}
+          <button className="auth-button" type="submit">
+            Continue
           </button>
+
+          <p className="auth-small">
+            By clicking continue, you agree to our Terms and Privacy Policy.
+          </p>
         </form>
       </div>
 
+      {/* Desktop image */}
       <div className="auth-image">
         <img
           src="https://placehold.co/600x800"
           className="auth-illustration"
+          alt="auth-visual"
         />
       </div>
     </div>

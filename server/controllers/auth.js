@@ -1,6 +1,6 @@
 import User from "../models/users.js";
 import { generateToken } from "../utils/jwt.js";
-import { checkEmailExists } from "./checkEmail.js"; // CORRECT PATH
+
 
 // Register a new user
 export const registerUser = async (req, res) => {

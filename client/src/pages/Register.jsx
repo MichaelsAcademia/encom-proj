@@ -1,8 +1,9 @@
+// client/src/pages/Register.jsx
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-const API_BASE_URL = "http://localhost:3000/api/v1";
+const API = "http://localhost:3000/api/v1/auth";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -14,18 +15,32 @@ export default function Register() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [query] = useSearchParams();
 
+  const emailParam = query.get("email");
+
+  /* --------------------------------------------------
+     STEP 1 — Autofill email from query param
+  --------------------------------------------------- */
   useEffect(() => {
-    const savedEmail = sessionStorage.getItem("entryEmail");
-    if (savedEmail) {
-      setForm((prev) => ({ ...prev, email: savedEmail }));
+    if (emailParam) {
+      setForm((prev) => ({ ...prev, email: emailParam }));
     }
-  }, []);
+  }, [emailParam]);
 
+  /* --------------------------------------------------
+     STEP 2 — Handle input changes
+  --------------------------------------------------- */
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  /* --------------------------------------------------
+     STEP 3 — Submit signup
+  --------------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,18 +50,22 @@ export default function Register() {
     }
 
     try {
-      await axios.post(`${API_BASE_URL}/auth/register`, {
+      await axios.post(`${API}/register`, {
         name: form.name,
         email: form.email,
         password: form.password,
       });
 
-      navigate("/login");
+      navigate(`/login?email=${encodeURIComponent(form.email)}`);
     } catch (err) {
-      setError("Registration failed.");
+      console.error(err);
+      setError("Registration failed. Email may already be registered.");
     }
   };
 
+  /* --------------------------------------------------
+     STEP 4 — Render UI
+  --------------------------------------------------- */
   return (
     <div className="auth-layout">
       <div className="auth-panel">
@@ -75,6 +94,7 @@ export default function Register() {
               className="auth-input"
               value={form.email}
               onChange={handleChange}
+              readOnly={!!emailParam}
               required
             />
           </label>
@@ -103,7 +123,9 @@ export default function Register() {
             />
           </label>
 
-          <button className="auth-button">Sign Up</button>
+          <button className="auth-button" type="submit">
+            Sign Up
+          </button>
         </form>
       </div>
 

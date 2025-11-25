@@ -1,10 +1,20 @@
-import express from "express";
-import { registerUser, loginUser } from "../../controllers/auth.js";
+import express from 'express'
+import {
+  registerUser,
+  loginUser
+} from '../../controllers/auth.js'
 
-const authRoutes = express.Router();
+import { checkEmailExists } from '../../controllers/checkEmail.js'
 
-// API Endpoints
-authRoutes.post("/register", registerUser);
-authRoutes.post("/login", loginUser);
+const authRoutes = express.Router()
 
-export default authRoutes;
+// CHECK EMAIL
+authRoutes.post('/check-email', checkEmailExists)
+
+// REGISTER
+authRoutes.post('/register', registerUser)
+
+// LOGIN
+authRoutes.post('/login', loginUser)
+
+export default authRoutes

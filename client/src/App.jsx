@@ -6,12 +6,13 @@ import { AuthContext } from "./context/AuthContext";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import EmailEntry from "./pages/EmailEntry";
+// ❌ REMOVED → EmailEntry (no longer used)
+// import EmailEntry from "./pages/EmailEntry";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 /* ---------------------------------
-   HOME COMPONENT (RESTORED)
+   HOME COMPONENT
 ---------------------------------- */
 function Home() {
   const { user } = useContext(AuthContext);
@@ -62,7 +63,8 @@ function Navbar() {
           Home
         </NavLink>
 
-        <NavLink to="/auth" style={activeStyle}>
+        {/* ✔ FIX: /auth removed → /login for “Get Started” */}
+        <NavLink to="/login" style={activeStyle}>
           Get Started
         </NavLink>
 
@@ -71,7 +73,7 @@ function Navbar() {
             <NavLink to="/login" style={activeStyle}>
               Login
             </NavLink>
-            <NavLink to="/register" style={activeStyle}>
+            <NavLink to="/signup" style={activeStyle}>
               Register
             </NavLink>
           </>
@@ -99,7 +101,7 @@ function Navbar() {
 }
 
 /* ---------------------------------
-   APP COMPONENT (MAIN ROUTER)
+   MAIN APP ROUTER
 ---------------------------------- */
 export default function App() {
   return (
@@ -108,10 +110,14 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<EmailEntry />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
 
+        {/* LOGIN PAGE handles BOTH email-entry & password login */}
+        <Route path="/login" element={<Login />} />
+
+        {/* SIGNUP PAGE */}
+        <Route path="/signup" element={<Register />} />
+
+        {/* PROTECTED PROFILE */}
         <Route
           path="/profile"
           element={
