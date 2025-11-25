@@ -1,10 +1,8 @@
 // client/src/context/AuthContext.jsx
 import { createContext, useState, useEffect } from "react";
 
-// Create the context object
 export const AuthContext = createContext();
 
-// Provider component to wrap around the app
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(sessionStorage.getItem("user")) || null
@@ -12,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(sessionStorage.getItem("token") || null);
   const [loading, setLoading] = useState(false);
 
-  // Called after successful login
   const login = (userData, jwtToken) => {
     sessionStorage.setItem("user", JSON.stringify(userData));
     sessionStorage.setItem("token", jwtToken);
@@ -21,14 +18,17 @@ export const AuthProvider = ({ children }) => {
     setToken(jwtToken);
   };
 
-  // Called when user clicks Sign Out
   const logout = () => {
-    sessionStorage.clear();
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+
     setUser(null);
     setToken(null);
+
+    // ⭐ Force redirect to login
+    window.location.href = "/login";
   };
 
-  // On page refresh, restore data from sessionStorage
   useEffect(() => {
     setLoading(true);
     const savedUser = sessionStorage.getItem("user");
@@ -42,7 +42,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Value shared with all components
   const value = {
     user,
     token,

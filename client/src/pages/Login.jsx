@@ -1,95 +1,76 @@
-// client/src/pages/Login.jsx
-import { useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const API_BASE_URL = "http://localhost:3000"; // adjust if needed
+const API_BASE_URL = "http://localhost:3000/api/v1";
 
 export default function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
-
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // Update field values
+  useEffect(() => {
+    const savedEmail = sessionStorage.getItem("entryEmail");
+    if (savedEmail) setForm((prev) => ({ ...prev, email: savedEmail }));
+  }, []);
+
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // Submit login form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
-        email: form.email,
-        password: form.password
-      });
-
-      console.log("Login response:", res.data);
-
-      // We assume res.data has: { user, token }
-      const { user, token } = res.data;
-
-      // Save to AuthContext (+ sessionStorage inside)
-      login(user, token);
-
-      setError("");
-
-      // Redirect to home after login
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, form);
+      login(res.data.user, res.data.token);
       navigate("/");
     } catch (err) {
-      console.error(err);
-      setError(
-        err.response?.data?.message ||
-          err.response?.data?.error ||
-          "Invalid email or password."
-      );
+      setError("Incorrect email or password.");
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
+    <div className="auth-layout">
+      <div className="auth-panel">
+        <h1>Log In</h1>
 
-      {error && <p style={{ color: "red", marginBottom: "0.5rem" }}>{error}</p>}
+        {error && <p className="auth-error">{error}</p>}
 
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            name="email"
-            type="email"
-            value={form.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
-          />
-        </div>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label className="auth-label">
+            Email
+            <input
+              name="email"
+              type="email"
+              className="auth-input"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+          </label>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            name="password"
-            type="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-        </div>
+          <label className="auth-label">
+            Password
+            <input
+              name="password"
+              type="password"
+              className="auth-input"
+              value={form.password}
+              onChange={handleChange}
+              required
+            />
+          </label>
 
-        <button type="submit">Login</button>
-      </form>
+          <button className="auth-button">Log In</button>
+        </form>
+      </div>
+
+      <div className="auth-image">
+        <img src="https://placehold.co/600x800" className="auth-illustration" />
+      </div>
     </div>
   );
 }
