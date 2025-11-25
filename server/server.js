@@ -2,7 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv/config' // by loading dotenv from dotenv/config, the .env file is automatically parsed and the variables are added to process.env
 import morgam from 'morgan'
-
+dotenv.config();
 // Create App
 
 const app = express()
