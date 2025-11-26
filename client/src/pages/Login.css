@@ -1,0 +1,116 @@
+@import "./Register.css";
+
+/* Full page container */
+.auth-container {
+  display: flex;
+  height: 100vh;               /* No scroll */
+  width: 100%;
+  overflow: hidden;
+  background: #f3f4f6;         /* light gray like retool */
+}
+
+/* White card */
+.auth-card {
+  flex: 1;
+  max-width: 420px;
+  margin: auto;
+  padding: 48px 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Titles */
+.auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Inputs */
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;          /* perfect match w/ button */
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #4f46e5;        /* retool purple */
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+/* Disabled email field */
+.auth-input:disabled {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+/* Buttons */
+.auth-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.auth-button:hover {
+  background: #4338ca;
+}
+
+/* Errors */
+.auth-error {
+  color: #dc2626;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Right side image */
+.auth-image {
+  flex: 1.2;
+  height: 100%;
+}
+
+.auth-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .auth-image {
+    display: none;
+  }
+  .auth-card {
+    max-width: 90%;
+  }
+}

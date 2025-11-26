@@ -1,59 +1,44 @@
-// client/src/context/AuthContext.jsx
-import { createContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
+// Create context
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(sessionStorage.getItem("user")) || null
-  );
-  const [token, setToken] = useState(sessionStorage.getItem("token") || null);
-  const [loading, setLoading] = useState(false);
+// Custom hook (THIS is the missing export!)
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
-  const login = (userData, jwtToken) => {
-    sessionStorage.setItem("user", JSON.stringify(userData));
-    sessionStorage.setItem("token", jwtToken);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    setUser(userData);
-    setToken(jwtToken);
-  };
-
-  const logout = () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-
-    setUser(null);
-    setToken(null);
-
-    // ⭐ Force redirect to login
-    window.location.href = "/login";
-  };
-
+  // Load user from localStorage
   useEffect(() => {
-    setLoading(true);
-    const savedUser = sessionStorage.getItem("user");
-    const savedToken = sessionStorage.getItem("token");
-
-    if (savedUser && savedToken) {
-      setUser(JSON.parse(savedUser));
-      setToken(savedToken);
+    const saved = localStorage.getItem("encomUser");
+    if (saved) {
+      setUser(JSON.parse(saved));
+      setIsAuthenticated(true);
     }
-
-    setLoading(false);
   }, []);
 
-  const value = {
-    user,
-    token,
-    loading,
-    login,
-    logout,
-    isAuthenticated: !!token
-  };
+  // Login function
+  function login(userData) {
+    localStorage.setItem("encomUser", JSON.stringify(userData));
+    setUser(userData);
+    setIsAuthenticated(true);
+  }
 
+  // Logout function
+  function logout() {
+    localStorage.removeItem("encomUser");
+    setUser(null);
+    setIsAuthenticated(false);
+  }
+
+  // Provide data to children
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}

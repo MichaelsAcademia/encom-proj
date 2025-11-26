@@ -1,162 +1,74 @@
-// client/src/pages/Login.jsx
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import "./Login.css";
 
-const API = "http://localhost:3000/api/v1/auth";
+const API = "http://localhost:3000/api/v1";
 
 export default function Login() {
-  const [emailOnly, setEmailOnly] = useState(""); // first screen
-  const [form, setForm] = useState({ email: "", password: "" }); // password screen
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [query] = useSearchParams();
+  const [params] = useSearchParams();
 
-  const emailParam = query.get("email");
-
-  /* -----------------------------------------
-     STEP 1: If user comes with ?email=...
-     show password login screen
-  ------------------------------------------ */
   useEffect(() => {
-    if (emailParam) {
-      setForm((prev) => ({ ...prev, email: emailParam }));
+    const emailFromQuery = params.get("email");
+    if (emailFromQuery) {
+      setForm((prev) => ({ ...prev, email: emailFromQuery }));
     }
-  }, [emailParam]);
+  }, [params]);
 
-  /* -----------------------------------------
-     STEP 2: Email-only form submit
-  ------------------------------------------ */
-  const handleEmailSubmit = async (e) => {
-    e.preventDefault();
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
-    if (!emailOnly.trim()) {
-      setError("Please enter your email.");
-      return;
-    }
-
-    try {
-      const res = await axios.post(`${API}/check-email`, {
-        email: emailOnly.trim(),
-      });
-
-      sessionStorage.setItem("entryEmail", emailOnly.trim());
-
-      if (res.data.exists) {
-        navigate(`/login?email=${encodeURIComponent(emailOnly.trim())}`);
-      } else {
-        navigate(`/signup?email=${encodeURIComponent(emailOnly.trim())}`);
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong.");
-    }
-  };
-
-  /* -----------------------------------------
-     STEP 3: Password login form submit
-  ------------------------------------------ */
-  const handlePasswordSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${API}/login`, {
-        email: form.email,
-        password: form.password,
-      });
-
+      const res = await axios.post(`${API}/auth/login`, form);
       login(res.data.user, res.data.token);
       navigate("/profile");
-    } catch (err) {
+    } catch {
       setError("Incorrect email or password.");
     }
   };
 
-  /* -----------------------------------------
-     Render FIRST SCREEN (email only)
-  ------------------------------------------ */
-  if (!emailParam) {
-    return (
-      <div className="auth-layout">
-        <div className="auth-panel">
-          <h1>Welcome to Encom</h1>
-          <p>Please enter your email to log in or sign up.</p>
-
-          {error && <p className="auth-error">{error}</p>}
-
-          <form className="auth-form" onSubmit={handleEmailSubmit}>
-            <label className="auth-label">
-              Email
-              <input
-                type="email"
-                className="auth-input"
-                value={emailOnly}
-                onChange={(e) => setEmailOnly(e.target.value)}
-                placeholder="email@example.com"
-                required
-              />
-            </label>
-
-            <button className="auth-button">Continue</button>
-
-            <p className="auth-small">
-              By clicking continue, you agree to our Terms and Privacy Policy.
-            </p>
-          </form>
-        </div>
-
-        <div className="auth-image">
-          <img src="https://placehold.co/600x800" className="auth-illustration" />
-        </div>
-      </div>
-    );
-  }
-
-  /* -----------------------------------------
-     Render SECOND SCREEN (password login)
-  ------------------------------------------ */
   return (
-    <div className="auth-layout">
-      <div className="auth-panel">
-        <h1>Log In</h1>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1 className="auth-title">Log In</h1>
+        <p className="auth-subtitle">Welcome back! Enter your password.</p>
 
         {error && <p className="auth-error">{error}</p>}
 
-        <form className="auth-form" onSubmit={handlePasswordSubmit}>
-          <label className="auth-label">
-            Email
-            <input
-              name="email"
-              type="email"
-              className="auth-input"
-              value={form.email}
-              readOnly
-            />
-          </label>
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <label className="auth-label">Email</label>
+          <input
+            name="email"
+            type="email"
+            className="auth-input"
+            value={form.email}
+            onChange={handleChange}
+            disabled
+          />
 
-          <label className="auth-label">
-            Password
-            <input
-              name="password"
-              type="password"
-              className="auth-input"
-              value={form.password}
-              onChange={(e) =>
-                setForm((prev) => ({ ...prev, password: e.target.value }))
-              }
-              required
-            />
-          </label>
+          <label className="auth-label">Password</label>
+          <input
+            name="password"
+            type="password"
+            className="auth-input"
+            value={form.password}
+            onChange={handleChange}
+          />
 
           <button className="auth-button">Log In</button>
         </form>
       </div>
 
       <div className="auth-image">
-        <img src="https://placehold.co/600x800" className="auth-illustration" />
+        <img src="https://placehold.co/1200x1800?text=Encom" />
       </div>
     </div>
   );
