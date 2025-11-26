@@ -5,15 +5,22 @@ import {
   getCartByUserId,
   createCart,
   updateCart,
-  deleteCart
+  deleteCart,
+  removeItemFromCart,
+  updateItemQuantity
 } from '../../controllers/carts.js'
 
 const cartRoutes = express.Router()
 
 // Routes
 cartRoutes.get('/', getAllCarts)
-cartRoutes.get('/:id', getCartById)
-cartRoutes.get('/user/:userId', getCartByUserId)
+
+cartRoutes.get('/id/:id', getCartById)
+cartRoutes.get('/:userId', getCartByUserId)
+
+cartRoutes.delete('/:userId/items/:itemId', removeItemFromCart)
+cartRoutes.put('/:userId/items/:itemId', updateItemQuantity)
+
 cartRoutes.post('/', createCart)
 cartRoutes.put('/:id', updateCart)
 cartRoutes.delete('/:id', deleteCart)
