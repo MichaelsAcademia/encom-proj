@@ -46,13 +46,15 @@ export default function Login() {
         <form className="auth-form" onSubmit={handleSubmit}>
           <label className="auth-label">Email</label>
           <input
-            name="email"
-            type="email"
-            className="auth-input"
-            value={form.email}
-            onChange={handleChange}
-            disabled
-          />
+        name="email"
+        type="email"
+        className="auth-input"
+        value={form.email}
+        onChange={handleChange}
+        disabled={!!params.get("email")}   // only disable when email exists in query
+        placeholder="email@example.com"
+        />
+
 
           <label className="auth-label">Password</label>
           <input
