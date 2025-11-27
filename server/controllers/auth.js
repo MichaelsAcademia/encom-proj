@@ -1,5 +1,5 @@
-import User from '../models/users.js'
-import { generateToken } from '../utils/jwt.js';
+import User from "../models/users.js";
+import { generateToken } from "../utils/jwt.js";
 
 // Register a new user
 export const registerUser = async (req, res) => {
@@ -24,7 +24,15 @@ export const registerUser = async (req, res) => {
             return res.status(500).json({ message: 'Error creating user' })
         }
 
-        res.status(201).json({ user: newUser, token })
+        const userData = {
+          username: newUser.username,
+          email: newUser.email
+        };
+
+        res.status(201).json({
+          user: userData,
+          token
+        })
     } catch (error) {
         res.status(500).json({ message: error.message })
     }
@@ -49,8 +57,32 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Error Logging in' })
     }
 
-    res.status(200).json({ message: 'Login successful', user, token })
+    const userData = {
+      username: user.username,
+      email: user.email
+    };
+
+    res.status(200).json({ message: 'Login successful', user: userData, token })
   } catch (error) {
     res.status(500).json({ error: 'Error logging in user' })
   }
 };
+
+// CHECK IF EMAIL EXISTS
+export const checkEmailExists = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    console.log("Checking email existence:", email);
+
+    const user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(200).json({ message: "Email exists", exists: true });
+    }
+
+    res.status(200).json({ message: 'Email does not exist', exists: false });
+  } catch (error) {
+    res.status(500).json({ message: 'Error checking email' });
+  }
+}

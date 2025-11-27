@@ -1,16 +1,42 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
+// client/src/App.jsx
+import "./App.css";
+import { Routes, Route, NavLink } from "react-router-dom";
 
-function App() {
+import Login from "./pages/auth/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import { useAuth, AuthContext } from "./context/AuthContext";
+
+// Temp home component
+function Home() {
+  const { user } = useAuth();
+  const { logout } = useAuth();
+
+  const username = user ? user.username : null;
+
+  console.log("Current user in Home:", username);
+
   return (
     <>
-      <div>
-        <h1>Welcome to Encom!</h1>
-      </div>
+      <nav>
+        <NavLink to="/login">Login</NavLink> {" "}
+        <NavLink to="/signup">Sign Up</NavLink>
+      </nav>
+      {username && <button onClick={logout}>Log Out</button>}
+      <h1>Home Page</h1>
+      {username ? <p>Welcome, {user.username}!</p> : <p>Please log in.</p>}
     </>
-  )
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Login />} />
+      </Routes>
+    </>
+  );
+}

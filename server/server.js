@@ -1,14 +1,14 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import dotenv from 'dotenv/config' // by loading dotenv from dotenv/config, the .env file is automatically parsed and the variables are added to process.env
-import morgam from 'morgan'
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import morgan from 'morgan';
 
-// Create App
+dotenv.config();
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(morgam('dev'))
+app.use(express.json());
+app.use(morgan('dev'));
 
 // Connect to DB
 
@@ -33,8 +33,6 @@ app.get('/', (req, res) => {
 import routes from './routes/v1/routes.js'
 
 app.use('/api/v1', routes)
-
-
 
 // Start server
 
