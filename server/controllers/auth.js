@@ -1,84 +1,88 @@
 import User from "../models/users.js";
 import { generateToken } from "../utils/jwt.js";
 
-// REGISTER USER
+// Register a new user
 export const registerUser = async (req, res) => {
+    try {
+        const { username, email, password } = req.body
+
+        const existingUser = await User.findOne({ $or: [ { username }, { email } ] })
+        if (existingUser) {
+            return res.status(400).json({ message: 'Username or email already exists' })
+        }
+
+        const newUser = new User({
+          username: username.toLowerCase(), // Currently saving usernames as lowercase to avoid case sensitivity issues
+          email,
+          password
+        })
+        await newUser.save()
+
+        const token = generateToken(newUser)
+
+        if (!token) {
+            return res.status(500).json({ message: 'Error creating user' })
+        }
+
+        const userData = {
+          username: newUser.username,
+          email: newUser.email
+        };
+
+        res.status(201).json({
+          user: userData,
+          token
+        })
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+export const loginUser = async (req, res) => {
+
+  const { email, password } = req.body
+
   try {
-    console.log("Incoming body:", req.body);
 
-    const { name, email, password } = req.body;
-    const username = name.toLowerCase();
+    const user = await User.findOne({ email })
+    const verified = await user.comparePassword(password)
 
-    console.log("Checking existingUser...");
-    const existingUser = await User.findOne({
-      $or: [{ username }, { email }],
-    });
-
-    if (existingUser) {
-      console.log("❌ existingUser triggered:", existingUser);
-      return res
-        .status(400)
-        .json({ message: "Username or email already exists" });
+    if (!verified || !user) {
+      return res.status(400).json({ message: 'Invalid username or password' })
     }
 
-    console.log("Checking emailExists...");
-    const emailExists = await User.findOne({ email });
+    const token = generateToken(user)
 
-    if (emailExists) {
-      console.log("❌ Email already exists:", emailExists);
-      return res.status(400).json({ message: "Email already exists" });
+    if (!token) {
+      return res.status(400).json({ message: 'Error Logging in' })
     }
 
-    console.log("Creating new user...");
-    const newUser = new User({
-      username,
-      email,
-      password,
-    });
+    const userData = {
+      username: user.username,
+      email: user.email
+    };
 
-    await newUser.save();
-
-    const token = generateToken(newUser);
-
-    console.log("User created successfully!");
-    res.status(201).json({ user: newUser, token });
+    res.status(200).json({ message: 'Login successful', user: userData, token })
   } catch (error) {
-    console.log("❌ Server error:", error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: 'Error logging in user' })
   }
 };
 
-// LOGIN USER
-export const loginUser = async (req, res) => {
+// CHECK IF EMAIL EXISTS
+export const checkEmailExists = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
-    console.log("Login attempt:", email);
+    console.log("Checking email existence:", email);
 
     const user = await User.findOne({ email });
 
-    if (!user) {
-      console.log("❌ User does not exist");
-      return res.status(400).json({ message: "User does not exist" });
+    if (user) {
+      return res.status(200).json({ message: "Email exists", exists: true });
     }
 
-    const verified = await user.comparePassword(password);
-
-    if (!verified) {
-      console.log("❌ Incorrect password");
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    const token = generateToken(user);
-
-    console.log("Login successful");
-    res.status(200).json({
-      message: "Login successful",
-      user,
-      token,
-    });
+    res.status(200).json({ message: 'Email does not exist', exists: false });
   } catch (error) {
-    console.log("❌ Login error:", error);
-    res.status(500).json({ error: "Error logging in user" });
+    res.status(500).json({ message: 'Error checking email' });
   }
-};
+}

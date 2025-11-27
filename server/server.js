@@ -2,22 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
-
-
-
-console.log("MONGO_URI loaded:", process.env.MONGO_URI);
-console.log("PORT loaded:", process.env.PORT);
-
-
 
 // Connect to DB
 
@@ -42,8 +33,6 @@ app.get('/', (req, res) => {
 import routes from './routes/v1/routes.js'
 
 app.use('/api/v1', routes)
-
-
 
 // Start server
 

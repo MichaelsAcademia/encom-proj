@@ -9,7 +9,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ username: null, email: null });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Load user from localStorage
@@ -22,15 +22,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Login function
-  function login(userData) {
+  function login(userData, token) {
     localStorage.setItem("encomUser", JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem("encomToken", token);
+
+    setUser({
+      username: userData.username,
+      email: userData.email
+    });
     setIsAuthenticated(true);
   }
 
   // Logout function
   function logout() {
     localStorage.removeItem("encomUser");
+    localStorage.removeItem("encomToken");
     setUser(null);
     setIsAuthenticated(false);
   }
