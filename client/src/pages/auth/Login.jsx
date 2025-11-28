@@ -5,7 +5,6 @@ import { AuthContext, useAuth } from "../../context/AuthContext";
 import "./Login.css";
 
 import art from "../../assets/login.png";
-import { set } from "mongoose";
 
 export default function Login() {
   const { user } = useAuth();
@@ -54,6 +53,9 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleContinue = async (e) => {
+    e.preventDefault();
+    console.log("Checking email existence: ", form.email);
+
     if (form.email === "") {
       setError("Please enter an email.");
       return;
@@ -180,7 +182,6 @@ export default function Login() {
             onChange={handleChange}
             disabled={params.get("email")}   // only disable when email exists in query
             placeholder="Your Email"
-            pattern="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
             required
             />
           { queryEmail && (

@@ -10,7 +10,7 @@ export default function CartPage() {
   // Log the user object to see what is stored
   console.log("Current user from AuthContext:", user);
 
-const userId = user?._id;
+const userId = user?.id;
 
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,12 +25,14 @@ const loadCart = async () => {
     return;
   }
 
+  console.log("Fetching cart for user ID:", userId);
+
   setLoading(true);
   setError(null);
 
   try {
     const token = localStorage.getItem("encomToken");
-    const res = await fetch(`http://localhost:5000/api/v1/carts/${userId}`, {
+    const res = await fetch(`/api/v1/carts/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       }
@@ -59,12 +61,12 @@ const loadCart = async () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/v1/carts/${userId}/items/${itemId}`,
+        `/api/v1/carts/${userId}/items/${itemId}`,
         {
           method: "PUT",
           headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("encomToken")}` 
+          "Authorization": `Bearer ${localStorage.getItem("encomToken")}`
         },
           body: JSON.stringify({ quantity }),
         }
@@ -85,10 +87,10 @@ const loadCart = async () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/v1/carts/${userId}/items/${itemId}`,
+        `/api/v1/carts/${userId}/items/${itemId}`,
         { method: "DELETE",
           headers: {
-      "Authorization": `Bearer ${localStorage.getItem("encomToken")}` 
+      "Authorization": `Bearer ${localStorage.getItem("encomToken")}`
     }
         }
       );
