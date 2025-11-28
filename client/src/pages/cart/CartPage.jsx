@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./cart.css";
 
 export default function CartPage() {
+    const { user } = useAuth();
     const navigate = useNavigate();
 
-    const userId =
-        localStorage.getItem("userId") || "673d5b58a7c911f92c3a8b80";
+    const userId = user?._id;
 
     const [cart, setCart] = useState(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
     const [error, setError] = useState(null);
 
-    // Fetch cart
     const loadCart = async () => {
+    // If user is not logged in, stop fetching and show message
+    if (!userId) {
+      setError("You must be logged in to view your cart.");
+      setLoading(false); // Important! Avoid endless loading
+      return;
+    }
+
         setLoading(true);
         setError(null);
 
         try {
-            const res = await fetch(
-                `http://localhost:3000/api/v1/carts/${userId}`
-            );
-
+            const res = await fetch(`http://localhost:5000/api/v1/carts/${userId}`);
             if (!res.ok) throw new Error("Failed to fetch cart");
 
             const data = await res.json();
@@ -35,9 +39,9 @@ export default function CartPage() {
         setLoading(false);
     };
 
-    useEffect(() => {
+        useEffect(() => {
         loadCart();
-    }, []);
+    }, [userId]);
 
     const updateQuantity = async (itemId, quantity) => {
         if (quantity < 1) return;
@@ -45,7 +49,7 @@ export default function CartPage() {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/v1/carts/${userId}/items/${itemId}`,
+                `http://localhost:5000/api/v1/carts/${userId}/items/${itemId}`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -69,7 +73,7 @@ export default function CartPage() {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/v1/carts/${userId}/items/${itemId}`,
+                `http://localhost:5000/api/v1/carts/${userId}/items/${itemId}`,
                 { method: "DELETE" }
             );
 
@@ -92,9 +96,9 @@ export default function CartPage() {
         return <h2 className="empty">Your cart is empty.</h2>;
 
     const subtotal = cart.items.reduce(
-        (sum, item) => sum + item.quantity * item.price,
-        0
-    );
+    (sum, item) => sum + item.quantity * item.priceAtAdd,
+    0);
+
 
     return (
         <>
@@ -105,14 +109,14 @@ export default function CartPage() {
                     {cart.items.map((item) => (
                         <div key={item._id} className="cart-item">
                             <img
-                                src={item.image || "https://via.placeholder.com/100"}
-                                alt={item.title}
-                                className="item-image"
-                            />
+                             src={item.listingId?.images?.[0] || "https://via.placeholder.com/100"}
+                             alt={item.listingId?.title}
+                             className="item-image"
+                             />
 
-                            <div className="item-info">
-                                <h3>{item.title}</h3>
-                                <p className="price">${item.price}</p>
+                            <h3>{item.listingId?.title}</h3>
+                            <p className="price">${item.priceAtAdd}</p>
+
 
                                 <div className="controls">
                                     <button
@@ -148,7 +152,6 @@ export default function CartPage() {
                                     >
                                         Remove
                                     </button>
-                                </div>
                             </div>
                         </div>
                     ))}

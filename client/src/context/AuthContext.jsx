@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("encomToken", token);
 
     setUser({
+      _id: userData._id,
       username: userData.username,
       email: userData.email
     });
