@@ -1,4 +1,5 @@
 import Cart from '../models/carts.js'
+import mongoose from "mongoose";
 
 // Get all carts
 export const getAllCarts = async (req, res) => {
@@ -25,23 +26,25 @@ export const getCartById = async (req, res) => {
 
 // Get cart by userId
 export const getCartByUserId = async (req, res) => {
-    try {
-        let cart = await Cart.findOne({ userId: req.params.userId })
-            .populate("items.listingId", "title price images");
+  try {
+    const userId = req.params.userId;
 
-        if (!cart) {
-            cart = await Cart.create({
-                userId: req.params.userId,
-                items: []
-            });
-        }
-
-        res.status(200).json(cart);
-
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid userId" });
     }
-}
+
+    let cart = await Cart.findOne({ userId })
+      .populate("items.listingId", "title price images");
+
+    if (!cart) {
+      cart = await Cart.create({ userId, items: [] });
+    }
+
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Create a new cart
 export const createCart = async (req, res) => {

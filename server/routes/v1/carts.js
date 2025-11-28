@@ -10,16 +10,18 @@ import {
   updateItemQuantity
 } from '../../controllers/carts.js'
 
+import { protect } from '../../middleware/authMiddleware.js';
+
 const cartRoutes = express.Router()
 
 // Routes
 cartRoutes.get('/', getAllCarts)
 
 cartRoutes.get('/id/:id', getCartById)
-cartRoutes.get('/:userId', getCartByUserId)
+cartRoutes.get('/:userId', protect, getCartByUserId)
 
-cartRoutes.delete('/:userId/items/:itemId', removeItemFromCart)
-cartRoutes.put('/:userId/items/:itemId', updateItemQuantity)
+cartRoutes.delete('/:userId/items/:itemId',protect, removeItemFromCart)
+cartRoutes.put('/:userId/items/:itemId', protect, updateItemQuantity)
 
 cartRoutes.post('/', createCart)
 cartRoutes.put('/:id', updateCart)
