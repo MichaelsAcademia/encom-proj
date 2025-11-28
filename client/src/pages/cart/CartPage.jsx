@@ -168,10 +168,13 @@ const loadCart = async () => {
           <h2>${subtotal.toFixed(2)}</h2>
 
           <button
-            className="checkout-btn"
-            disabled={updating}
-            onClick={() => navigate("/checkout")}
-          >
+           className="checkout-btn"
+          disabled={updating}
+          onClick={() => {
+          localStorage.setItem("lastCart", JSON.stringify(cart));
+          navigate("/checkout");
+          }}
+         >
             Proceed to Checkout
           </button>
         </aside>
