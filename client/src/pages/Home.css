@@ -1,0 +1,170 @@
+/* Phones */
+
+.home {
+    padding-bottom: 4rem;
+    
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 4rem;
+}
+
+
+
+.hero {
+    height: 20rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    
+    background-image: url("https://imgs.search.brave.com/_niO5gZ6HZzmVn7mPscN1zq882clB2ttZiaMuPSUGII/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/akp0TDRhZjdMeDhB/QUFBTS9jYXQtY2F0/cy5naWY.gif");
+    background-size: 100% 100%;
+
+    /* background-color: yellow; */
+}
+
+.hero-title {
+    color: var(--white);
+    font-size: 3.5rem;
+}
+
+.hero-subtitle {
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+
+
+.popular {
+    padding: 0rem 2rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.5rem;
+}
+
+.popular-title {
+    color: var(--black);
+    font-size: 2.3rem;
+}
+
+.popular-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.popular-item {
+    padding: 1rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 0.5rem;
+
+    border-radius: 4px;
+
+    background-color: var(--white);
+}
+
+.popular-item img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    
+    border-radius: 8px;
+}
+
+
+
+.shop-sell {
+    padding: 0rem 2rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.shop-sell-item {
+    width: 100%;
+    height: 35rem;
+    padding: 6rem 0rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    
+    background-image: url("https://imgs.search.brave.com/_niO5gZ6HZzmVn7mPscN1zq882clB2ttZiaMuPSUGII/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS50ZW5vci5jb20v/akp0TDRhZjdMeDhB/QUFBTS9jYXQtY2F0/cy5naWY.gif");
+    background-size: 100% 100%;
+}
+
+.shop-sell-item h2 {
+    color: var(--white);
+    font-size: 2.5rem;
+}
+
+.shop-sell-item button {
+    padding: 1rem 2.5rem;
+
+    border: none;
+    border-radius: 4px;
+
+    background-color: var(--black);
+
+    color: var(--white);
+    font-size: 2rem;
+
+    cursor: pointer;
+}
+
+
+
+/* Large tablets or desktops */
+
+@media screen and (min-width: 800px) {
+    .hero {
+        height: 40rem;
+    }
+
+    .hero-title {
+        font-size: 5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 2rem;
+    }
+
+
+
+    .popular {
+        padding: 0rem 6rem;
+    }
+
+    .popular-title {
+        font-size: 3rem;
+    }
+
+    .popular-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+
+
+    .shop-sell {
+        padding: 0rem 6rem;
+
+        flex-flow: row nowrap;
+    }
+
+    .shop-sell-item {
+        width: 50%;
+        height: 50rem;
+        padding: 4rem 0rem;
+    }
+
+    .shop-sell-item h2 {
+        font-size: 3rem;
+    }
+}

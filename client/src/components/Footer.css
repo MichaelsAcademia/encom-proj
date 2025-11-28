@@ -1,0 +1,56 @@
+/* Phones */
+
+.footer {
+    padding: 4rem 0rem 4rem 4rem;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 5rem;
+
+    background-color: rgb(28, 28, 28);
+}
+
+.footer-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.footer-content h2 {
+    color: var(--white);
+    font-size: 2rem;
+}
+
+.footer-content button {
+    border: none;
+
+    background-color: transparent;
+
+    color: var(--white);
+    font-size: 1.4rem;
+
+    cursor: pointer;
+}
+
+/* Large tablets or desktops */
+
+@media screen and (min-width: 800px) {
+    .footer {
+        padding: 4rem 3rem 4rem 6rem;
+    
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+    .footer-content {
+        flex: 1;
+
+        gap: 2rem;
+    }
+
+    .footer-content button {
+        font-size: 1.7rem;
+    }
+}

@@ -1,42 +1,34 @@
-// client/src/App.jsx
 import "./App.css";
 import { Routes, Route, NavLink } from "react-router-dom";
-
-import Login from "./pages/auth/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-
+import { Home } from "./pages/Home.jsx";
+import { Navbar } from "./components/Navbar.jsx";
+import { Footer } from "./components/Footer.jsx";
 import { useAuth, AuthContext } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./pages/auth/Login";
 
-// Temp home component
-function Home() {
-  const { user } = useAuth();
-  const { logout } = useAuth();
+export const App = () => {
+    const { user } = useAuth();
+    const { logout } = useAuth();
 
-  const username = user ? user.username : null;
+    const username = user ? user.username : null;
 
-  console.log("Current user in Home:", username);
+    console.log("Current user in Home:", username);
 
-  return (
-    <>
-      <nav>
-        <NavLink to="/login">Login</NavLink> {" "}
-        <NavLink to="/signup">Sign Up</NavLink>
-      </nav>
-      {username && <button onClick={logout}>Log Out</button>}
-      <h1>Home Page</h1>
-      {username ? <p>Welcome, {user.username}!</p> : <p>Please log in.</p>}
-    </>
-  );
-}
+    return (
+        <div className="app">
+            <Navbar user={user} logout={logout} />
+            
+            <main>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Login />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+            </main>
 
-export default function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Login />} />
-      </Routes>
-    </>
-  );
+            <Footer />
+        </div>
+    );
 }
