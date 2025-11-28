@@ -26,14 +26,18 @@ export const getCartById = async (req, res) => {
 // Get cart by userId
 export const getCartByUserId = async (req, res) => {
     try {
-        let cart = await Cart.findOne({ userId: req.params.userId });
+        let cart = await Cart.findOne({ userId: req.params.userId })
+            .populate("items.listingId", "title price images");
+
         if (!cart) {
             cart = await Cart.create({
                 userId: req.params.userId,
                 items: []
             });
         }
+
         res.status(200).json(cart);
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
