@@ -12,7 +12,7 @@ const router = express.Router()
 
 router.use("/listings", listingRoutes)
 router.use("/users", protect, userRoutes)
-router.use("/reviews", protect, reviewRoutes)
+router.use("/reviews", reviewRoutes)
 router.use("/orders", protect, orderRoutes)
 router.use("/carts", protect, cartRoutes)
 router.use("/auth", authRoutes)

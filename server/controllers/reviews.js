@@ -1,10 +1,12 @@
 import Review from '../models/reviews.js'
+import User from '../models/users.js'
 
 
 //Get all Reviews
 export const getAllReviews = async (req, res) => {
     try {
         const {sellerId, orderId} = req.query;
+
         const filter = {}
 
         if (sellerId) filter.sellerId = sellerId;
@@ -24,15 +26,44 @@ export const getAllReviews = async (req, res) => {
 //Get reviews by ID
 export const getReviewById = async (req, res) => {
     try{
+
         const review = await Review.findById(req.params.id);
 
         if (!review){
             return res.status(404).json({message: 'Review not found'})
-        } res.status(200).json(review)}
-            catch (error){
-            res.status(500).json({message: error.message})
-            }
         }
+
+        res.status(200).json(review)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
+export const getUserReviews = async (req, res) => {
+
+    const username = req.params.username;
+
+    try{
+
+        const seller = await User.findOne({ username }).select("_id");
+
+        const sellerId = seller ? seller._id : null;
+
+        if (!sellerId) {
+            return res.status(404).json({ message: 'Seller not found' });
+        }
+
+        const reviews = await Review.find({ sellerId }).select(["reviewerId", "rating", "comment", "createdAt"]);
+
+        if (!reviews || reviews.length === 0){
+            return res.status(404).json({message: 'Review not found'})
+        }
+
+        res.status(200).json(reviews)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
 
 
 //Create Review

@@ -1,8 +1,24 @@
 import Listing from "../models/listings.js";
+import User from "../models/users.js";
 
-// ✅ GET /listings – Fetch all listings
+// ✅ GET /listings – Fetch all listings or just listing of a certain seller
 export const getListings = async (req, res) => {
+
+  const { username } = req.params;
+
   try {
+
+    if (username) {
+
+      const sellerId = await User.findOne({ username }).select("_id");
+      if (!sellerId) {
+        return res.status(404).json({ message: "Seller not found" });
+      }
+
+      const sellerListings = await Listing.find({ sellerId }).select(["title", "price", "images"]);
+      return res.status(200).json({ listings: sellerListings });
+    }
+
     const listings = await Listing.find();
     res.status(200).json(listings);
   } catch (error) {

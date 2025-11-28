@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.get("/", getListings);
 router.get("/:id", getListingById);
+router.get("/seller/:username", getListings);
 router.post("/", protect, createListing);
 router.put("/:id", protect, updateListing);
 router.delete("/:id", protect, deleteListing);

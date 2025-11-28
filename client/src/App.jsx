@@ -3,6 +3,8 @@ import "./App.css";
 import { Routes, Route, NavLink } from "react-router-dom";
 
 import Login from "./pages/auth/Login";
+import UserListings from "./pages/profile/listings";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { useAuth, AuthContext } from "./context/AuthContext";
@@ -36,6 +38,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Login />} />
+        <Route path="/store/:username" element={<UserListings />} />
       </Routes>
     </>
   );
