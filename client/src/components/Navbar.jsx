@@ -1,11 +1,19 @@
 import "./Navbar.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-export const Navbar = ({ user, logout }) => {
+export const Navbar = ({ handleMobileSideModal, user, logout }) => {
+    const navigate = useNavigate();
 
-    const handleProfile = (e) => {
+    const handleAccount = (e) => {
         e.stopPropagation();
-        console.log("Profile");
+        if (user) {
+            console.log("Account - User is logged in");
+
+            // Uncomment when account page is ready
+            // navigate("/account");
+        } else {
+            navigate("/login");
+        }
     }
 
     const handleCart = (e) => {
@@ -42,33 +50,20 @@ export const Navbar = ({ user, logout }) => {
                         <input className="search-input" type="text" placeholder="Search" />
                     </div>
 
-                    <button className="burger-bttn">
+                    <button className="burger-bttn" onClick={handleMobileSideModal}>
                         <div className="line"></div>
                         <div className="line"></div>
                         <div className="line"></div>
                     </button>
 
                     <div className="nav-links-group">
-                        {
-                            user ? (
-                                <button className="nav-link-bttn" onClick={handleLogout}>
-                                    <span className="fa-regular fa-arrow-left-from-bracket"></span>
-                                </button>
-                            ) : (
-                                <>
-                                <NavLink to="/login" className={"nav-link-bttn"}>
-                                    Login
-                                    {/* <span className="fa-regular fa-arrow-right-from-bracket"></span> */}
-                                </NavLink>
-                                <NavLink to="/signup" className={"nav-link-bttn"}>
-                                    Signup
-                                    {/* <span className="fa-regular fa-arrow-right-from-bracket"></span> */}
-                                </NavLink>
-                                </>
-                            )
-                        }
+                        {user && (
+                            <button className="nav-link-bttn" onClick={handleLogout}>
+                                <span className="fa-regular fa-arrow-left-from-bracket"></span>
+                            </button>
+                        )}
                         
-                        <button className="nav-link-bttn" onClick={handleProfile}>
+                        <button className="nav-link-bttn" onClick={handleAccount}>
                             <span className="fa-regular fa-user"></span>
                         </button>
 

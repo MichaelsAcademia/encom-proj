@@ -1,7 +1,9 @@
 import "./App.css";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home.jsx";
 import { Navbar } from "./components/Navbar.jsx";
+import { MobileSideModal } from "./components/MobileSideModal.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { useAuth, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -13,11 +15,22 @@ export const App = () => {
 
     const username = user ? user.username : null;
 
-    console.log("Current user in Home:", username);
+    console.log(`Current user in Home: ${username}`);
+
+
+
+    const [isMobileSideModalOpen, setIsMobileSideModalOpen] = useState(false);
+    const handleMobileSideModal = () => {
+        setIsMobileSideModalOpen(!isMobileSideModalOpen);
+    }
 
     return (
         <div className="app">
-            <Navbar user={user} logout={logout} />
+            {isMobileSideModalOpen && (
+                <MobileSideModal handleModal={handleMobileSideModal} user={user} logout={logout} />
+            )}
+
+            <Navbar handleMobileSideModal={handleMobileSideModal} user={user} logout={logout} />
             
             <main>
                 <Routes>
