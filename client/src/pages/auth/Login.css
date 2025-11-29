@@ -79,14 +79,14 @@
   border: none;
   font-size: 16px;
   font-weight: 600;
-  background: #4f46e5;
+  background: #000000;
   color: white;
   cursor: pointer;
   transition: 0.2s;
 }
 
 .auth-button:hover {
-  background: #4338ca;
+  background: #3f3f3f;
 }
 
 .TOS {

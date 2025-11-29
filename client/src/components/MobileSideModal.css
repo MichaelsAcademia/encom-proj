@@ -1,0 +1,51 @@
+.mobile-side-modal-blur {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.mobile-side-modal-content {
+    width: 20rem;
+    height: 100%;
+    padding: 4rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 2rem;
+
+    background-color: var(--white);
+}
+
+.slide-left-fade {
+    animation: slide-left-fade 0.4s ease forwards;
+}
+
+.slide-right-fade {
+    animation: slide-right-fade 0.4s ease forwards;
+}
+
+@keyframes slide-left-fade {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slide-right-fade {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}

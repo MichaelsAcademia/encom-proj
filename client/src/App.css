@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* Phones */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.app {
+    height: 100%;
+    min-height: 100dvh;
 
-    font-family: 'Roboto', Arial, sans-serif;
+    display: flex;
+    flex-flow: column nowrap;
+
+    background-color: var(--bg);
+    color: var(--black);
 }

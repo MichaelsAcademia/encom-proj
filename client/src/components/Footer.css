@@ -1,0 +1,86 @@
+/* Phones */
+
+.footer {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    gap: 8rem;
+
+    background-color: rgb(28, 28, 28);
+}
+
+.footer h3 {
+    color: var(--white);
+    font-size: 1.4rem;
+    /* text-align: center; */
+}
+
+.footer-grid {
+    width: 100%;
+    padding: 4rem 0rem 4rem 4rem;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    row-gap: 5rem;
+}
+
+.footer-grid-item {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.footer-grid-item h2 {
+    color: var(--white);
+    font-size: 2rem;
+}
+
+.footer-grid-item button {
+    border: none;
+
+    background-color: transparent;
+
+    color: var(--white);
+    font-size: 1.4rem;
+
+    cursor: pointer;
+}
+
+.footer-bottom {
+    width: 100%;
+    padding: 2rem 4rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.footer-bottom h1 {
+    color: var(--white);
+    font-size: 2rem;
+
+    font-weight: normal;
+}
+
+/* Large tablets or desktops */
+
+@media screen and (min-width: 800px) {
+    .footer-grid {
+        padding: 4rem 3rem 4rem 6rem;
+
+        display: flex;
+        flex-flow: row nowrap;
+    }
+
+    .footer-grid-item {
+        flex: 1;
+
+        gap: 2rem;
+    }
+
+    .footer-grid-item button {
+        font-size: 1.7rem;
+    }
+}

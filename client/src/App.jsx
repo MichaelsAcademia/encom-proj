@@ -1,42 +1,52 @@
-// client/src/App.jsx
 import "./App.css";
-import { Routes, Route, NavLink } from "react-router-dom";
-
-import Login from "./pages/auth/Login";
+import { useState,  } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { Navbar } from "./components/Navbar.jsx";
+import { MobileSideModal } from "./components/MobileSideModal.jsx";
+import { useAuth, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { useAuth, AuthContext } from "./context/AuthContext";
+import { Home } from "./pages/Home.jsx";
+import { Footer } from "./components/Footer.jsx";
+import Login from "./pages/auth/Login";
 
-// Temp home component
-function Home() {
-  const { user } = useAuth();
-  const { logout } = useAuth();
+export const App = () => {
+    const { user, logout } = useAuth();
 
-  const username = user ? user.username : null;
+    const location = useLocation().pathname.replace("/", "");
+    const login = location === "login" || location === "signup";
 
-  console.log("Current user in Home:", username);
+    console.log("location:", location);
+    console.log("in login?", login);
 
-  return (
-    <>
-      <nav>
-        <NavLink to="/login">Login</NavLink> {" "}
-        <NavLink to="/signup">Sign Up</NavLink>
-      </nav>
-      {username && <button onClick={logout}>Log Out</button>}
-      <h1>Home Page</h1>
-      {username ? <p>Welcome, {user.username}!</p> : <p>Please log in.</p>}
-    </>
-  );
-}
+    const username = user ? user.username : null;
 
-export default function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Login />} />
-      </Routes>
-    </>
-  );
+    console.log(`Current user in Home: ${username}`);
+
+
+    const [isMobileSideModalOpen, setIsMobileSideModalOpen] = useState(false);
+    const handleMobileSideModal = () => {
+        setIsMobileSideModalOpen(!isMobileSideModalOpen);
+    }
+
+    return (
+        <div className="app">
+            {isMobileSideModalOpen && (
+                <MobileSideModal handleModal={handleMobileSideModal} user={user} logout={logout} />
+            )}
+
+            {!login && <Navbar handleMobileSideModal={handleMobileSideModal} user={user} logout={logout} />}
+
+            <main>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<Login />} />
+                    <Route path="*" element={<Home />} />
+                </Routes>
+            </main>
+
+            {!login && <Footer />}
+        </div>
+    );
 }
