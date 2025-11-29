@@ -40,6 +40,7 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
     const handleOrders = (e) => {
         e.stopPropagation();
         console.log("Orders");
+        navigate("/orders");
     }
 
     return (

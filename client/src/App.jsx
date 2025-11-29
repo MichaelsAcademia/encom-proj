@@ -6,11 +6,14 @@ import { MobileSideModal } from "./components/MobileSideModal.jsx";
 import { useAuth, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { Home } from "./pages/Home.jsx";
-import { Footer } from "./components/Footer.jsx";
+import { Home } from "./pages/Home";
+import { Footer } from "./components/Footer";
 import Login from "./pages/auth/Login";
-import CartPage from "./pages/cart/CartPage.jsx";
-import Checkout from "./pages/checkout/Checkout.jsx";
+import CartPage from "./pages/cart/CartPage";
+import Checkout from "./pages/checkout/Checkout";
+import OrdersPage from "./pages/orders";
+import OrderDetails from "./pages/order-details";
+import ReviewsPage from "./pages/reviews";
 
 export const App = () => {
     const { user, logout } = useAuth();
@@ -42,11 +45,13 @@ export const App = () => {
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="*" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Login />} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/orders" element={<OrdersPage />} />
+                    <Route path="/orders/:orderId" element={<OrderDetails />} />
+                    <Route path="/review" element={<ReviewsPage />} />
                 </Routes>
             </main>
 
