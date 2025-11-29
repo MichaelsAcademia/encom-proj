@@ -13,8 +13,6 @@ export const MobileSideModal = ({ handleModal, user, logout }) => {
         }, 400);
     };
 
-
-    
     const navigate = useNavigate();
 
     const handleAccount = (e) => {
@@ -59,7 +57,7 @@ export const MobileSideModal = ({ handleModal, user, logout }) => {
                             <span className="fa-regular fa-arrow-left-from-bracket"></span>
                         </button>
                     )}
-                    
+
                     <button className="nav-link-bttn" onClick={handleAccount}>
                         <span className="fa-regular fa-user"></span>
                     </button>

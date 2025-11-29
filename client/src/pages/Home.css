@@ -2,12 +2,10 @@
 
 .home {
     padding-bottom: 4rem;
-    
+
     display: flex;
     flex-flow: column nowrap;
     gap: 4rem;
-
-    background-color: red;
 }
 
 
@@ -20,21 +18,19 @@
     justify-content: center;
     align-items: center;
     gap: 2rem;
-    
-    background-image: url("https://placehold.co/600/blue/white?text=LOL");
-    background-size: cover;
-    background-position: center;
 
-    /* background-color: yellow; */
+    background-image: url("../assets/hero.png");
+    background-size: cover;
+    background-position-y: 70%;
 }
 
 .hero-title {
-    color: var(--white);
+    color: var(--black);
     font-size: 3.5rem;
 }
 
 .hero-subtitle {
-    color: var(--white);
+    color: gray;
     font-size: 1.5rem;
 }
 
@@ -42,21 +38,16 @@
 
 .home-content {
     padding: 0rem 2rem;
-    
+
     display: flex;
     flex-flow: column nowrap;
     gap: 4rem;
-    background-color: blue;
 }
-
-
 
 .popular {
     display: flex;
     flex-flow: column nowrap;
     gap: 1.5rem;
-
-    background-color: green;
 }
 
 .popular-title {
@@ -67,12 +58,10 @@
 .popular-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* gap: 1rem; */
+    gap: 3rem;
 }
 
 .popular-item {
-    padding: 1rem;
-
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -95,7 +84,7 @@
     width: 100%;
     aspect-ratio: 16/9;
     object-fit: cover;
-    
+
     border-radius: 8px;
 }
 
@@ -115,22 +104,32 @@
     flex-flow: column nowrap;
     justify-content: space-between;
     align-items: center;
-    
+
     background-size: cover;
     background-position: center;
 }
 
 .shop-sell-item.left {
-    background-image: url("https://placehold.co/600/orange/white");
+    background-image: url("../assets/hero_shop.png");
+    background-size: cover;
+    background-position-y: 90%;
+
+    background-size: 1000px;
 }
 
 .shop-sell-item.right {
-    background-image: url("https://placehold.co/600/purple/white");
+    background-image: url("../assets/hero_sell.jpg");
+    background-size: cover;
+    background-position-y: 90%;
+
+    background-size: 1000px;
 }
 
 .shop-sell-item h2 {
     color: var(--white);
     font-size: 2.5rem;
+
+    text-shadow: 2px 2px 20px rgba(0, 0, 0, 1);
 }
 
 .shop-sell-item button {
@@ -157,16 +156,14 @@
     justify-content: center;
     align-items: center;
     gap: 4rem;
-
-    background-color: var(--black);
 }
 
 .stat-item {
     text-align: center;
 
     opacity: 0;
-    transform: translateY(-30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(-40px);
+    transition: opacity 1s ease-out, transform 1.2s ease-out;
 }
 
 .stats.visible .stat-item {
@@ -187,12 +184,12 @@
 }
 
 .stat-item h2 {
-    color: var(--white);
+    color: var(--black);
     font-size: 3rem;
 }
 
 .stat-item p {
-    color: var(--white);
+    color: gray;
     font-size: 1.5rem;
 }
 
@@ -206,7 +203,7 @@
     .hero-title {
         font-size: 5rem;
     }
-    
+
     .hero-subtitle {
         font-size: 2rem;
     }

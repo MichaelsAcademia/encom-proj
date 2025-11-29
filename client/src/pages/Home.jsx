@@ -120,7 +120,7 @@ export const Home = () => {
                         <p>Verified Sellers</p>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     );
 }

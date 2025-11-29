@@ -31,7 +31,10 @@ export const Footer = () => {
                     <button>Terms & Conditions</button>
                 </div>
             </div>
-            <h3>© 2025 Encom. All rights reserved.</h3>
+            <div className="footer-bottom">
+                <h1>&copy; Encom 2025</h1>
+                <h1>Terms & Conditions</h1>
+            </div>
         </div>
     );
 }

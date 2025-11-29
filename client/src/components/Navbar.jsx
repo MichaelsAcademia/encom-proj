@@ -4,9 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 export const Navbar = ({ handleMobileSideModal, user, logout }) => {
     const navigate = useNavigate();
 
+    console.log("Navbar - User:", user);
+
     const handleAccount = (e) => {
         e.stopPropagation();
-        if (user) {
+        if (user.username) {
             console.log("Account - User is logged in");
 
             // Uncomment when account page is ready
@@ -57,12 +59,12 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
                     </button>
 
                     <div className="nav-links-group">
-                        {user && (
+                        {user.username && (
                             <button className="nav-link-bttn" onClick={handleLogout}>
                                 <span className="fa-regular fa-arrow-left-from-bracket"></span>
                             </button>
                         )}
-                        
+
                         <button className="nav-link-bttn" onClick={handleAccount}>
                             <span className="fa-regular fa-user"></span>
                         </button>
@@ -78,7 +80,7 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
                         <button className="nav-link-bttn" onClick={handleOrders}>
                             <span className="fa-regular fa-tag"></span>
                         </button>
-                    
+
                         {
                         /* Use this if you want to use NavLink instead of buttons
 
