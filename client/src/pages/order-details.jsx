@@ -9,7 +9,7 @@ export default function OrderDetails() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('encomToken');
         const headers = { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) };
 
         const res = await fetch(`/api/v1/orders/${orderId}`, { headers });

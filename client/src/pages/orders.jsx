@@ -9,8 +9,8 @@ export default function OrdersPage(){
     useEffect(() => {
         const fetchOrders = async () => {
           try {
-            const token = localStorage.getItem('token');
-            if (!token) return void navigate('/login');
+            const token = localStorage.getItem('encomToken');
+            if (!token) return navigate('/login');
 
             const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` };
             const res = await fetch('/api/v1/orders', { headers });
@@ -67,7 +67,7 @@ export default function OrdersPage(){
                 {orders.map((order) => (
                     <div className="order-card" key={order._id || order.id}>
                         <div className="order-card-body">
-                        <div className="order-card-meta"> 
+                        <div className="order-card-meta">
                             <div className="meta-left">
                                 <div className="meta-label">ORDER PLACED</div>
                                 <div className="meta-value">{formatDate(order.createdAt)}</div>
@@ -86,7 +86,7 @@ export default function OrdersPage(){
                                 const img = listing.img || item.img || '/assets/placeholder.png';
                                 const title = listing.title || item.title || 'Item';
                                 return (
-                                    <div className="product-row" key={item._id || item.id || listing.id || `${order._id}-${idx}`}> 
+                                    <div className="product-row" key={item._id || item.id || listing.id || `${order._id}-${idx}`}>
                                         <div className="product-image">
                                             <img src={img} alt={title} />
                                         </div>
