@@ -25,6 +25,7 @@ export const registerUser = async (req, res) => {
         }
 
         const userData = {
+          id: newUser._id,
           username: newUser.username,
           email: newUser.email
         };
@@ -58,6 +59,7 @@ export const loginUser = async (req, res) => {
     }
 
     const userData = {
+      id: user._id,
       username: user.username,
       email: user.email
     };

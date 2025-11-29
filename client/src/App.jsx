@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Home } from "./pages/Home.jsx";
 import { Footer } from "./components/Footer.jsx";
 import Login from "./pages/auth/Login";
+import CartPage from "./pages/cart/CartPage.jsx";
+import Checkout from "./pages/checkout/Checkout.jsx";
 
 export const App = () => {
     const { user, logout } = useAuth();
@@ -40,9 +42,11 @@ export const App = () => {
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="*" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Login />} />
-                    <Route path="*" element={<Home />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<Checkout />} />
                 </Routes>
             </main>
 
