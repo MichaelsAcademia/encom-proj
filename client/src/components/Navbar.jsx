@@ -4,11 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 export const Navbar = ({ handleMobileSideModal, user, logout }) => {
     const navigate = useNavigate();
 
+    const isLoggedIn = user && user.username;
+
     console.log("Navbar - User:", user);
 
     const handleAccount = (e) => {
         e.stopPropagation();
-        if (user.username) {
+        if (isLoggedIn) {
             console.log("Account - User is logged in");
 
             // Uncomment when account page is ready
@@ -21,6 +23,7 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
     const handleCart = (e) => {
         e.stopPropagation();
         console.log("Cart");
+        navigate("/cart");
     }
 
     const handleLogout = (e) => {
@@ -59,7 +62,7 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
                     </button>
 
                     <div className="nav-links-group">
-                        {user.username && (
+                        {isLoggedIn && (
                             <button className="nav-link-bttn" onClick={handleLogout}>
                                 <span className="fa-regular fa-arrow-left-from-bracket"></span>
                             </button>

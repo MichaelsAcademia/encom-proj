@@ -15,6 +15,7 @@ router.use("/users", protect, userRoutes)
 router.use("/reviews", protect, reviewRoutes)
 router.use("/orders", protect, orderRoutes)
 router.use("/carts", protect, cartRoutes)
+
 router.use("/auth", authRoutes)
 
 export default router

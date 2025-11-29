@@ -1,0 +1,40 @@
+.checkout-page {
+    padding: 30px;
+}
+
+.checkout-container {
+    display: flex;
+    gap: 30px;
+}
+
+.checkout-items {
+    flex: 3;
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.checkout-summary {
+    flex: 1;
+    background: #fffbe0;
+    border: 1px solid #dad55a;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.place-order-btn {
+    width: 100%;
+    padding: 12px;
+    background: #f0c14b;
+    border: 1px solid #a88734;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}

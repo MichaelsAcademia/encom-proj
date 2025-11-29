@@ -1,4 +1,6 @@
 import Order from '../models/orders.js'
+import Cart from '../models/carts.js'
+import Listing from '../models/listings.js'
 
 // Get all orders
 export const getAllOrders = async (req, res) => {
@@ -26,9 +28,46 @@ export const getOrderById = async (req, res) => {
 // Create a new order
 export const createOrder = async (req, res) => {
     try{
-        const order = new Order(req.body);
+        const { userId } = req.body;
+       
+         const cart = await Cart.findOne({ userId });
+        if (!cart || cart.items.length === 0) {
+            return res.status(400).json({ message: "Cart is empty" });
+        }
+
+        const orderItems = await Promise.all(
+            cart.items.map(async (item) => {
+                const listing = await Listing.findById(item.listingId);
+
+                return {
+                    listingId: item.listingId,
+                    quantity: item.quantity,
+                    priceAtCheckout: listing.price 
+                };
+            })
+        );
+
+        const total = orderItems.reduce(
+            (sum, item) => sum + item.quantity * item.priceAtCheckout,
+            0
+        );
+
+        const order = new Order({
+            userId,
+            items: orderItems,
+            total
+        });
+
         const savedOrder = await order.save();
-        res.status(200).json(savedOrder);
+
+        cart.items = [];
+        await cart.save();
+
+        return res.status(200).json({
+            message: "Order placed was successfully",
+            order: savedOrder
+        });
+   
     } catch(error) {
         res.status(500).json({ message: error.message });
     }

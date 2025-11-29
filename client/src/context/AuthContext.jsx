@@ -9,7 +9,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState({ username: null, email: null });
+  const [user, setUser] = useState({ id: null, username: null, email: null });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Load user from localStorage
@@ -27,6 +27,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem("encomToken", token);
 
     setUser({
+      id: userData.id,
       username: userData.username,
       email: userData.email
     });
