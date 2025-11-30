@@ -1,3 +1,5 @@
+import { useNavigate, Link } from "react-router-dom";
+
 import "./Footer.css";
 
 export const Footer = () => {
@@ -18,10 +20,10 @@ export const Footer = () => {
                 </div>
                 <div className="footer-grid-item">
                     <h2>Account</h2>
-                    <button>Sign In</button>
-                    <button>Cart</button>
-                    <button>Order History</button>
-                    <button>Account Settings</button>
+                    <Link to="/login" className="link">Sign In</Link>
+                    <Link to="/cart" className="link">Cart</Link>
+                    <Link to="/orders" className="link">Order History</Link>
+                    <Link to="/account" className="link">Account Settings</Link>
                 </div>
                 <div className="footer-grid-item">
                     <h2>Contact Us</h2>
@@ -33,7 +35,6 @@ export const Footer = () => {
             </div>
             <div className="footer-bottom">
                 <h1>&copy; Encom 2025</h1>
-                <h1>Terms & Conditions</h1>
             </div>
         </div>
     );

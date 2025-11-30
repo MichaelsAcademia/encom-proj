@@ -19,7 +19,7 @@
     align-items: center;
     gap: 2rem;
 
-    background-image: url("../assets/hero.png");
+    background-image: url("../../assets/hero.png");
     background-size: cover;
     background-position-y: 70%;
 }
@@ -110,7 +110,7 @@
 }
 
 .shop-sell-item.left {
-    background-image: url("../assets/hero_shop.png");
+    background-image: url("../../assets/hero_shop.png");
     background-size: cover;
     background-position-y: 90%;
 
@@ -118,7 +118,7 @@
 }
 
 .shop-sell-item.right {
-    background-image: url("../assets/hero_sell.jpg");
+    background-image: url("../../assets/hero_sell.jpg");
     background-size: cover;
     background-position-y: 90%;
 

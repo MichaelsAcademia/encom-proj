@@ -6,14 +6,14 @@ import { MobileSideModal } from "./components/MobileSideModal.jsx";
 import { useAuth, AuthContext } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { Home } from "./pages/Home";
+import { Home } from "./pages/home/Home.jsx";
 import { Footer } from "./components/Footer";
-import Login from "./pages/auth/Login";
-import CartPage from "./pages/cart/CartPage";
-import Checkout from "./pages/checkout/Checkout";
-import OrdersPage from "./pages/orders";
-import OrderDetails from "./pages/order-details";
-import ReviewsPage from "./pages/reviews";
+import Login from "./pages/auth/Login.jsx";
+import CartPage from "./pages/cart/CartPage.jsx";
+import Checkout from "./pages/checkout/Checkout.jsx";
+import OrdersPage from "./pages/orders/orders.jsx";
+import OrderDetails from "./pages/orders/order-details.jsx";
+import ReviewsPage from "./pages/orders/reviews.jsx";
 
 export const App = () => {
     const { user, logout } = useAuth();

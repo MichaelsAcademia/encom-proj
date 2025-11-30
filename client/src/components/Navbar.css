@@ -6,6 +6,7 @@
     z-index: 2;
 
     background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
 }
 
 .nav-content {
@@ -20,6 +21,10 @@
 .logo {
     color: var(--black);
     font-size: 1rem;
+}
+
+.logout-icon {
+    transform: rotate(180deg);
 }
 
 .nav-content-group {
@@ -60,7 +65,7 @@
     display: none;
     flex-flow: row nowrap;
     justify-content: flex-end;
-    gap: 1rem;
+    gap: .5rem;
 }
 
 .search-item {
@@ -72,9 +77,9 @@
 
 .search-input {
     width: 17rem;
-    padding: 0.5rem 1rem 0.5rem 3rem;
+    height: 3.7rem;
 
-    border: 1px solid var(--black);
+    border: 2px solid var(--black);
     border-radius: 2rem;
     outline: none;
 
@@ -92,22 +97,34 @@
 }
 
 .nav-link-bttn {
-    width: 5rem;
+    min-width: 5rem;
+    width: auto;
     height: 5rem;
+
+    padding: 1.5rem 1.5rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     border: none;
-    border-radius: 50%;
+    background: none;
 
-    background-color: var(--black);
-    
-    color: var(--white);
+    color: black;
     font-size: 2rem;
 
     cursor: pointer;
+}
+
+.nav-link-bttn:hover {
+    border-bottom: 2px solid var(--black);
+    transform: translateY(1px)
+}
+
+.nav-text {
+    margin-left: 1rem;
+    font-size: 1.8rem;
+    font-weight: 500;
 }
 
 /* Large tablets or desktops */
@@ -132,13 +149,13 @@
     .search-input {
         width: 30rem;
         padding: 1rem 1.5rem 1rem 4rem;
-    
+
         font-size: 1.6rem;
     }
 
     .search-icon {
         left: 1.5rem;
-    
+
         font-size: 1.6rem;
     }
 }

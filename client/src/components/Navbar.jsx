@@ -1,23 +1,23 @@
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 
-export const Navbar = ({ handleMobileSideModal, user, logout }) => {
+import {
+    SignOutIcon,
+    SignInIcon,
+    UserIcon,
+    ShoppingCartSimpleIcon,
+    TagIcon,
+    PencilSimpleIcon
+} from "@phosphor-icons/react";
+
+export const Navbar = ({ user, logout }) => {
     const navigate = useNavigate();
 
     const isLoggedIn = user && user.username;
 
-    console.log("Navbar - User:", user);
-
     const handleAccount = (e) => {
         e.stopPropagation();
-        if (isLoggedIn) {
-            console.log("Account - User is logged in");
-
-            // Uncomment when account page is ready
-            // navigate("/account");
-        } else {
-            navigate("/login");
-        }
+        console.log("Account");
     }
 
     const handleCart = (e) => {
@@ -30,6 +30,8 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
         e.stopPropagation();
         console.log("Logout");
         logout();
+
+        navigate("/");
     }
 
     const handleListings = (e) => {
@@ -47,7 +49,7 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
         <div className="nav">
             <div className="nav-content">
                 <Link to="/" className="logo">
-                    <h2>Encom ICON</h2>
+                    <h2>ENCOM</h2>
                 </Link>
 
                 <div className="nav-content-group">
@@ -55,36 +57,37 @@ export const Navbar = ({ handleMobileSideModal, user, logout }) => {
                         <span className="search-icon fa-solid fa-magnifying-glass"></span>
                         <input className="search-input" type="text" placeholder="Search" />
                     </div>
-
-                    <button className="burger-bttn" onClick={handleMobileSideModal}>
-                        <div className="line"></div>
-                        <div className="line"></div>
-                        <div className="line"></div>
-                    </button>
-
                     <div className="nav-links-group">
-                        {isLoggedIn && (
-                            <button className="nav-link-bttn" onClick={handleLogout}>
-                                <span className="fa-regular fa-arrow-left-from-bracket"></span>
+                        {
+                            isLoggedIn ? (
+                            <>
+                                <button className="nav-link-bttn" onClick={handleAccount}>
+                                    <UserIcon size={26} weight="bold"/>
+                                    <p className="nav-text">Account</p>
+                                </button>
+                                <button className="nav-link-bttn" onClick={handleCart}>
+                                    <ShoppingCartSimpleIcon size={26} weight="bold"/>
+                                    <p className="nav-text">Cart</p>
+                                </button>
+                                <button className="nav-link-bttn" onClick={handleListings}>
+                                    <PencilSimpleIcon size={25} weight="bold"/>
+                                    <p className="nav-text">Listings</p>
+                                </button>
+                                <button className="nav-link-bttn" onClick={handleOrders}>
+                                    <TagIcon size={24} weight="bold"/>
+                                    <p className="nav-text">Orders</p>
+                                </button>
+                                <button className="nav-link-bttn" onClick={handleLogout}>
+                                    <SignOutIcon className="logout-icon" size={24} weight="bold"/>
+                                    <p className="nav-text">Log Out</p>
+                                </button>
+                            </>
+                        ) : (
+                            <button className="nav-link-bttn" onClick={handleAccount}>
+                                <SignInIcon size={28} weight="bold"/>
+                                <p className="nav-text">Log In</p>
                             </button>
                         )}
-
-                        <button className="nav-link-bttn" onClick={handleAccount}>
-                            <span className="fa-regular fa-user"></span>
-                        </button>
-
-                        <button className="nav-link-bttn" onClick={handleCart}>
-                            <span className="fa-regular fa-cart-shopping"></span>
-                        </button>
-
-                        <button className="nav-link-bttn" onClick={handleListings}>
-                            <span className="fa-regular fa-pen"></span>
-                        </button>
-
-                        <button className="nav-link-bttn" onClick={handleOrders}>
-                            <span className="fa-regular fa-tag"></span>
-                        </button>
-
                         {
                         /* Use this if you want to use NavLink instead of buttons
 
