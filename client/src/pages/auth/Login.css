@@ -10,6 +10,16 @@
 .auth-header {
   margin-bottom: 40px;
   text-align: center;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+  }
+  p {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #6b7280;
+  }
 }
 
 .auth-header p {
@@ -21,18 +31,6 @@
   flex: 1;
   margin: auto;
   width: 50%;
-}
-
-/* Titles */
-.auth-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.auth-subtitle {
-  color: #6b7280;
-  margin-bottom: 24px;
 }
 
 /* Form */
@@ -60,7 +58,7 @@
 
 .auth-input:focus {
   outline: none;
-  border-color: #4f46e5;        /* retool purple */
+  border-color: #000000;        /* retool purple */
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }
 

@@ -41,54 +41,27 @@
 
     display: flex;
     flex-flow: column nowrap;
-    gap: 4rem;
+    gap: 6rem;
 }
 
 .popular {
     display: flex;
     flex-flow: column nowrap;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .popular-title {
     color: var(--black);
     font-size: 2.3rem;
+
+    margin-bottom: 1rem;
 }
 
 .popular-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: 4rem;
 }
-
-.popular-item {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    gap: 0.5rem;
-
-    /* border-radius: 4px; */
-
-    /* background-color: var(--white); */
-}
-
-.popular-item h3 {
-    font-size: 1.5rem;
-}
-
-.popular-item p {
-    font-size: 1.2rem;
-}
-
-.popular-item img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-
-    border-radius: 8px;
-}
-
-
 
 .shop-sell {
     display: flex;

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getListings,
+  getPopularListings,
   getListingById,
   createListing,
   updateListing,
@@ -11,6 +12,7 @@ import { protect } from "../../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.get("/", getListings);
+router.get("/popular", getPopularListings);
 router.get("/:id", getListingById);
 router.post("/", protect, createListing);
 router.put("/:id", protect, updateListing);

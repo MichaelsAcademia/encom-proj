@@ -14,6 +14,7 @@ export const Navbar = ({ user, logout }) => {
     const navigate = useNavigate();
 
     const isLoggedIn = user && user.username;
+    const username = isLoggedIn ? user.username.charAt(0).toUpperCase() + user.username.slice(1) : null;
 
     const handleAccount = (e) => {
         e.stopPropagation();
@@ -63,29 +64,29 @@ export const Navbar = ({ user, logout }) => {
                             <>
                                 <button className="nav-link-bttn" onClick={handleAccount}>
                                     <UserIcon size={26} weight="bold"/>
-                                    <p className="nav-text">Account</p>
+                                    <p className="nav-text">{username}</p>
                                 </button>
                                 <button className="nav-link-bttn" onClick={handleCart}>
                                     <ShoppingCartSimpleIcon size={26} weight="bold"/>
-                                    <p className="nav-text">Cart</p>
+                                    {/* <p className="nav-text">Cart</p> */}
                                 </button>
                                 <button className="nav-link-bttn" onClick={handleListings}>
                                     <PencilSimpleIcon size={25} weight="bold"/>
-                                    <p className="nav-text">Listings</p>
+                                    {/* <p className="nav-text">Listings</p> */}
                                 </button>
                                 <button className="nav-link-bttn" onClick={handleOrders}>
                                     <TagIcon size={24} weight="bold"/>
-                                    <p className="nav-text">Orders</p>
+                                    {/* <p className="nav-text">Orders</p> */}
                                 </button>
                                 <button className="nav-link-bttn" onClick={handleLogout}>
                                     <SignOutIcon className="logout-icon" size={24} weight="bold"/>
-                                    <p className="nav-text">Log Out</p>
+                                    {/* <p className="nav-text">Log Out</p> */}
                                 </button>
                             </>
                         ) : (
-                            <button className="nav-link-bttn" onClick={handleAccount}>
-                                <SignInIcon size={28} weight="bold"/>
-                                <p className="nav-text">Log In</p>
+                            <button className="nav-link-bttn" onClick={() => navigate("/login")}>
+                                <SignInIcon size={24} weight="bold"/>
+                                {/* <p className="nav-text">Log In</p> */}
                             </button>
                         )}
                         {

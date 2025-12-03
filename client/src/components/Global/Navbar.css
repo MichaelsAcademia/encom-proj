@@ -101,7 +101,7 @@
     width: auto;
     height: 5rem;
 
-    padding: 1.5rem 1.5rem;
+    padding: 1rem 1rem;
 
     display: flex;
     justify-content: center;
@@ -111,20 +111,19 @@
     background: none;
 
     color: black;
-    font-size: 2rem;
 
     cursor: pointer;
+}
+
+.nav-link-bttn p {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-left: 1rem;
 }
 
 .nav-link-bttn:hover {
     border-bottom: 2px solid var(--black);
     transform: translateY(1px)
-}
-
-.nav-text {
-    margin-left: 1rem;
-    font-size: 1.8rem;
-    font-weight: 500;
 }
 
 /* Large tablets or desktops */
