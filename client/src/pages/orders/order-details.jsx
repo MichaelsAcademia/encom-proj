@@ -64,9 +64,8 @@ export default function OrderDetails() {
     <div className="orders-details">
       <div className="od-header">
         <h1 className="od-title">Order Details</h1>
-        <div className="od-sub">Order number {show._id}</div>
+        <div className="od-sub">Order #{show._id}</div>
       </div>
-
       <div className="order-card summary-card">
         <div className="order-card-row">
           <div className="summary-col">
@@ -96,7 +95,7 @@ export default function OrderDetails() {
                 <div className="product-price">{price}</div>
               </div>
               <div className="product-action">
-                <Link to="/reviews" className="review-btn">Write a product review</Link>
+                <Link to={`/reviews?product=${listing.id}`} className="review-btn">Write a product review</Link>
               </div>
             </div>
           );

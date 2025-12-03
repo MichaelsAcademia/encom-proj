@@ -66,13 +66,13 @@ export const Navbar = ({ user, logout }) => {
                                     <UserIcon size={26} weight="bold"/>
                                     <p className="nav-text">{username}</p>
                                 </button>
-                                <button className="nav-link-bttn" onClick={handleCart}>
-                                    <ShoppingCartSimpleIcon size={26} weight="bold"/>
-                                    {/* <p className="nav-text">Cart</p> */}
-                                </button>
                                 <button className="nav-link-bttn" onClick={handleListings}>
                                     <PencilSimpleIcon size={25} weight="bold"/>
                                     {/* <p className="nav-text">Listings</p> */}
+                                </button>
+                                <button className="nav-link-bttn" onClick={handleCart}>
+                                    <ShoppingCartSimpleIcon size={26} weight="bold"/>
+                                    {/* <p className="nav-text">Cart</p> */}
                                 </button>
                                 <button className="nav-link-bttn" onClick={handleOrders}>
                                     <TagIcon size={24} weight="bold"/>

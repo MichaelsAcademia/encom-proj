@@ -1,0 +1,29 @@
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+
+    font-size: 1.5rem;
+
+}
+
+.item-name-qty {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    width: 90%;
+}
+
+.checkout-item:first-child {
+    padding-top: 0;
+}
+
+.checkout-item:last-child {
+    border-bottom: none;
+}
+
+.checkout-item p {
+    margin: 0;
+}

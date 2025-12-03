@@ -112,7 +112,7 @@ export default function CartPage({ user }) {
             <div className="divider" />
             <div className="cart">
                 {(cart.items.length === 0 && !loading) && (
-                        <p className="empty-cart">Your cart is empty. Please add items</p>
+                        <p className="empty">Your cart is empty</p>
                 )}
                 {
                     (loading && !updating) && <p>Loading your cart...</p>
@@ -136,6 +136,11 @@ export default function CartPage({ user }) {
                         className="checkout-btn"
                         disabled={updating}
                         onClick={() => {
+                            if (cart.items.length === 0) {
+                                alert("Your cart is empty. Please add items before proceeding to checkout.");
+                                return;
+                            };
+
                             localStorage.setItem("lastCart", JSON.stringify(cart));
                             navigate("/checkout");
                         }}
