@@ -70,7 +70,7 @@
 }
 .product-info{
     flex:1;
-    margin-left:12px;
+    margin-left:6px;
 }
 .product-title{
     font-weight:600;
@@ -84,8 +84,7 @@
     font-weight:400;
 }
 .product-row .product-action{
-    align-self: flex-end;
-    margin-bottom: 8px;
+    align-self: flex-start;
 }
 .review-btn{
     font-size: 12px;

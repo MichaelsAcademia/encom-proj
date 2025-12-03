@@ -1,9 +1,6 @@
 import "./CartItem.css";
 
 export default function CartItem({ item, updateQuantity, removeItem }) {
-
-    console.log("Rendering CartItem for item:", item);
-
     return (
         <div className="cart-item">
 

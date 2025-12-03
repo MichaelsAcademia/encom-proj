@@ -21,8 +21,6 @@ export const App = () => {
 
     const username = user ? user.username : null;
 
-    console.log(`Current user in Home: ${username}`);
-
     return (
         <div className="app">
             {!login && <Navbar user={user} logout={logout} />}
@@ -36,7 +34,8 @@ export const App = () => {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/orders" element={<OrdersPage user={user} />} />
                     <Route path="/orders/:orderId" element={<OrderDetails />} />
-                    <Route path="/review" element={<ReviewsPage />} />
+                    <Route path="/review" element={<ReviewsPage user={user}/>} />
+                    <Route path="/listings" />
                 </Routes>
             </main>
 

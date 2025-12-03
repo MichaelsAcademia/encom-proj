@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import './order-details.css';
 
 export default function OrderDetails() {
+  const navigate = useNavigate();
+
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
 
@@ -42,7 +44,7 @@ export default function OrderDetails() {
     };
 
     fetchOrder();
-  }, [orderId]);
+  }, [orderId, navigate]);
 
   const parsePrice = (p) => {
     if (p == null) return 0;
@@ -95,7 +97,7 @@ export default function OrderDetails() {
                 <div className="product-price">{price}</div>
               </div>
               <div className="product-action">
-                <Link to={`/reviews?product=${listing.id}`} className="review-btn">Write a product review</Link>
+                <Link to={`/review?order=${show._id}&listing=${listing.id}&product=${listing.title}`} className="review-btn">Write a product review</Link>
               </div>
             </div>
           );

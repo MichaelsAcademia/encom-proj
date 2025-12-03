@@ -24,8 +24,6 @@ export default function CartPage({ user }) {
             return;
         }
 
-        console.log("Fetching cart for user ID:", userId);
-
         setLoading(true);
         setError(null);
 
@@ -121,7 +119,7 @@ export default function CartPage({ user }) {
                     error && <p className="error">{error}</p>
                 }
                 <div className="cart-items">
-                    {cart.items.map((item) => (
+                    {cart.items.map((item, index) => (
                         <>
                             <CartItem key={item._id} item={item} updateQuantity={updateQuantity} removeItem={removeItem}/>
                         </>
