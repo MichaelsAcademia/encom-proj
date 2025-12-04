@@ -57,14 +57,19 @@
   "license": "ISC",
   "description": "",
   "jest": {
-  "testEnvironment": "jsdom",
-  "setupFiles": ["<rootDir>/src/tests/jest.setup.js"],
-  "transform": {
-    "^.+\\.(js|jsx)$": "babel-jest"
-  },
-  "moduleFileExtensions": ["js", "jsx"],
-  "moduleNameMapper": {
-    "\\.(css|less|scss|sass)$": "<rootDir>/src/tests/styleMock.js"
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "<rootDir>/src/tests/jest.setup.js"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "<rootDir>/src/tests/styleMock.js"
+    }
   }
-}
 }
