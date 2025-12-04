@@ -11,7 +11,7 @@ import { protect } from "../../middleware/authMiddleware.js"
 const router = express.Router()
 
 router.use("/listings", listingRoutes)
-router.use("/users", protect, userRoutes)
+router.use("/users", userRoutes)
 router.use("/reviews", protect, reviewRoutes)
 router.use("/orders", protect, orderRoutes)
 router.use("/carts", protect, cartRoutes)

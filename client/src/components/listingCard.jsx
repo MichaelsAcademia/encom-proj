@@ -4,16 +4,11 @@ import "./listingCard.css";
 
 export default function ListingCard({ item }) {
 
-    const {
-        _id,
-        title,
-        price,
-        images
-    } = item;
+    const { _id, title, price, images } = item;
 
     const item_id = _id;
 
-    const image = (images.length > 0) ? images[0] : "https://placehold.co/400?text=No%20Image";
+    const image = (images.length > 0) ? images[0] : `https://placehold.co/400?text=${title}`;
 
     return (
         <Link to={`/listing/${item_id}`}>

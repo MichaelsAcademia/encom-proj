@@ -7,7 +7,8 @@ import {
     UserIcon,
     ShoppingCartSimpleIcon,
     TagIcon,
-    PencilSimpleIcon
+    PencilSimpleIcon,
+    StorefrontIcon
 } from "@phosphor-icons/react";
 
 export const Navbar = ({ user, logout }) => {
@@ -49,9 +50,11 @@ export const Navbar = ({ user, logout }) => {
     return (
         <div className="nav">
             <div className="nav-content">
-                <Link to="/" className="logo">
-                    <h2>ENCOM</h2>
-                </Link>
+                <div className="nav-main-group">
+                    <Link to="/" className="logo">
+                        <h2>ENCOM</h2>
+                    </Link>
+                </div>
 
                 <div className="nav-content-group">
                     <div className="search-item">
@@ -62,6 +65,10 @@ export const Navbar = ({ user, logout }) => {
                         {
                             isLoggedIn ? (
                             <>
+                                <button className="nav-link-bttn" onClick={() => navigate("/listings")}>
+                                    <StorefrontIcon size={26} weight="bold"/>
+                                    <p className="nav-text">Listings</p>
+                                </button>
                                 <button className="nav-link-bttn" onClick={handleAccount}>
                                     <UserIcon size={26} weight="bold"/>
                                     <p className="nav-text">{username}</p>

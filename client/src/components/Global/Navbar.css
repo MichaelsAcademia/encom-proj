@@ -18,9 +18,32 @@
     gap: 1rem;
 }
 
+.nav-main-group {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    gap: 2rem;
+}
+
+.nav-main-group p {
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    color: black;
+
+    margin-bottom: 5px;
+    margin-left: .5rem;
+}
+
+.nav-main-group p:nth-child(3) {
+    margin-left: -4px;
+    margin-right: -10px;
+}
+
 .logo {
     color: var(--black);
     font-size: 1rem;
+    align-items: center;
 }
 
 .logout-icon {

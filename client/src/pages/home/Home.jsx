@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import "./Home.css";
@@ -61,11 +62,11 @@ export const Home = () => {
                 <div className="shop-sell">
                     <div className="shop-sell-item left">
                         <h2>Find it. Love it. Own it.</h2>
-                        <button>Shop Now</button>
+                        <Link to="/listings" className="link">Shop Now</Link>
                     </div>
                     <div className="shop-sell-item right">
                         <h2>List it. Ship it. Profit.</h2>
-                        <button>Sell Now</button>
+                        <Link to="/" className="link">Sell Now</Link>
                     </div>
                 </div>
                 <div className="stats" ref={statsRef}>
