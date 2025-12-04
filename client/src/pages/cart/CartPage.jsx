@@ -7,7 +7,6 @@ export default function CartPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Log the user object to see what is stored
   console.log("Current user from AuthContext:", user);
 
 const userId = user?.id;
@@ -17,7 +16,6 @@ const userId = user?.id;
   const [updating, setUpdating] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch cart
 const loadCart = async () => {
     if (!user || !user.username) {
         setError("You must be logged in to view your cart.");
