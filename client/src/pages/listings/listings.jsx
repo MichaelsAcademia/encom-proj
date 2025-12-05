@@ -45,7 +45,9 @@ export default function ListingsPage() {
         console.log(listings)
     }, [startingIndex]);
 
-    const handlePage = () => {
+    const handlePage = (invalid) => {
+        if (invalid) return;
+
         setListings([]);
         setLoading(true);
         setError(null);
@@ -84,7 +86,7 @@ export default function ListingsPage() {
                     to={`/listings?page=${pageParam == 1 ? 1 : (pageParam - 1)}`}
                     data-disabled={pageParam === 1}
                     className="page-button"
-                    onClick={handlePage}
+                    onClick={() => handlePage(pageParam === 1)}
                 >
                     {"<"}
                 </Link>
@@ -93,7 +95,7 @@ export default function ListingsPage() {
                     to={`/listings?page=${endIndex === totalListings ? pageParam : pageParam + 1}`}
                     data-disabled={endIndex === totalListings}
                     className="page-button"
-                    onClick={handlePage}
+                    onClick={() => handlePage(endIndex === totalListings)}
                 >
                     {">"}
                 </Link>

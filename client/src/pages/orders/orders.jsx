@@ -101,8 +101,8 @@ export default function OrdersPage({ user }){
                             </div>
                             {(order.items || []).map((item, idx) => {
                                 const listing = item.listing || {};
-                                const img = listing.img[0] || 'https://placehold.co/400?text=No%20Image';
                                 const title = listing.title || item.title || 'Item';
+                                const img = listing.img ? listing.img[0] : `https://placehold.co/400?text=${title}`;
                                 return (
                                     <div className="product-row" key={item._id || item.id || listing.id || `${order._id}-${idx}`}>
                                         <div className="product-image">
