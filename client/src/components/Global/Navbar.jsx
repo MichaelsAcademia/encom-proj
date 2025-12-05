@@ -62,13 +62,13 @@ export const Navbar = ({ user, logout }) => {
                         <input className="search-input" type="text" placeholder="Search" />
                     </div>
                     <div className="nav-links-group">
+                        <button className="nav-link-bttn" onClick={() => navigate("/listings")}>
+                            <StorefrontIcon size={26} weight="bold"/>
+                            <p className="nav-text">Listings</p>
+                        </button>
                         {
                             isLoggedIn ? (
                             <>
-                                <button className="nav-link-bttn" onClick={() => navigate("/listings")}>
-                                    <StorefrontIcon size={26} weight="bold"/>
-                                    <p className="nav-text">Listings</p>
-                                </button>
                                 <button className="nav-link-bttn" onClick={handleAccount}>
                                     <UserIcon size={26} weight="bold"/>
                                     <p className="nav-text">{username}</p>

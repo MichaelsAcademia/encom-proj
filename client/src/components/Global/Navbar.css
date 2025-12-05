@@ -146,7 +146,6 @@
 
 .nav-link-bttn:hover {
     border-bottom: 2px solid var(--black);
-    transform: translateY(1px)
 }
 
 /* Large tablets or desktops */

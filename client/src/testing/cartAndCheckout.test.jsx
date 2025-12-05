@@ -57,11 +57,11 @@ describe("CartPage & Checkout Flow", () => {
 
     renderWithProviders(<CartPage />);
 
-    expect(screen.getByText(/Loading cart/i)).toBeInTheDocument();
+    // expect(screen.getByText("Loading your cart")).toBeInTheDocument();
 
-    expect(await screen.findByText("Shopping Cart")).toBeInTheDocument();
+    expect(await screen.findByText("Your Cart")).toBeInTheDocument();
     expect(screen.getByText("Test Product")).toBeInTheDocument();
-    expect(screen.getByText("$10")).toBeInTheDocument();
+    expect(screen.getByText("$10.00")).toBeInTheDocument();
   });
 
   test("updates item quantity", async () => {

@@ -8,6 +8,8 @@ import { set } from "mongoose";
 export default function ListingsPage() {
     const [searchParams] = useSearchParams();
     const pageParam = Math.max(1, searchParams.get("page") || 1);
+    const sortParam = searchParams.get("sort") || null;
+    const newSort = sortParam === "new";
 
     const [totalListings, setTotalListings] = useState(0);
     const [listings, setListings] = useState([]);

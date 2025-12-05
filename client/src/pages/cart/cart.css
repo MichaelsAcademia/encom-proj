@@ -13,6 +13,7 @@
 .cart-container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   padding: 50px 65px;
 
   min-height: 80vh;
@@ -20,11 +21,12 @@
 
 .cart {
   display: flex;
+  justify-content: space-between;
   gap: 30px;
 }
 
 .cart-container p {
-  font-size: 2rem;
+  font-size: 2rem;;
 }
 
 .cart-items {
@@ -69,10 +71,10 @@
   background: #252525;
 }
 
-.empty,
+.empty-cart,
 .loading,
 .error {
-  width: 100%;
-  font-size: 20px;
+  width: 50%;
+  font-size: 10px;
 }
 .error { color: red; }

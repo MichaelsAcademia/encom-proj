@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -6,7 +7,18 @@ import "./Home.css";
 import ListingCard from "../../components/listingCard.jsx";
 
 export const Home = () => {
+    const navigate = useNavigate();
     const [popularItems, setPopularItems] =  useState([]);
+
+    const handleSellBtn = () => {
+        const token = localStorage.getItem("encomToken");
+        if (token) {
+            navigate("/listings/new");
+            return
+        }
+
+        navigate("/login");
+    };
 
     useEffect(() => {
         // Fetch popular items from the backend API
@@ -66,7 +78,7 @@ export const Home = () => {
                     </div>
                     <div className="shop-sell-item right">
                         <h2>List it. Ship it. Profit.</h2>
-                        <Link to="/" className="link">Sell Now</Link>
+                        <button className="link" onClick={handleSellBtn}>Sell Now</button>
                     </div>
                 </div>
                 <div className="stats" ref={statsRef}>

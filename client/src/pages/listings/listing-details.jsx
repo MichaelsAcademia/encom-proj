@@ -4,7 +4,7 @@ import axios from 'axios';
 import ListingCard from '../../components/listingCard';
 import "./listing-details.css";
 
-export default function ListingDetails() {
+export default function ListingDetails({ user }) {
     const { listingId } = useParams();
 
     const [listing, setListing] = useState({
@@ -26,12 +26,54 @@ export default function ListingDetails() {
     });
     const [sellerListings, setSellerListings] = useState([]);
     const [similarListings, setSimilarListings] = useState([]);
+
+    const [cartBtnLbl, setCartBtnLbl] = useState("Add to Cart");
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const dateFormat = (dateString) => {
         const options = { day: 'numeric', month: '2-digit', year: 'numeric' };
         return new Date(dateString).toLocaleDateString("en-GB", options);
+    }
+
+    const handleCartAdd = async () => {
+        // console.log(user)
+        const token = localStorage.getItem('encomToken');
+
+        if (!user.id || !user.username || !user.email || !token) {
+            alert('Please log in to add items to your cart.');
+            return;
+        }
+
+        try {
+            const response = await axios.put(
+                `/api/v1/carts/?userId=${user.id}`,
+                {
+                    items: [{
+                        listingId: listingId,
+                        quantity: 1,
+                        priceAtAdd: listing.price
+                    }]
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            console.log('Item added to cart:', response);
+
+            setCartBtnLbl("Added!");
+
+            setTimeout(() => {
+                setCartBtnLbl("Add to Cart");
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to add item to cart.');
+            console.log(err);
+        }
     }
 
     useEffect(() => {
@@ -43,14 +85,14 @@ export default function ListingDetails() {
                 const response = await axios.get(`/api/v1/listings/${listingId}`);
                 setListing(response.data);
 
-                console.log("Listing Data:", response.data);
+                // console.log("Listing Data:", response.data);
             } catch (err) {
                 setError('Failed to fetch listing details.');
+                console.log(err);
             }
         }
 
-        // Only fetch if listing title is empty (to avoid refetching)
-        if (listing.title === '') fetchListingDetails();
+        fetchListingDetails();
 
         // Fetch seller details
         const fetchSellerDetails = async () => {
@@ -58,12 +100,10 @@ export default function ListingDetails() {
                 const response = await axios.get(`/api/v1/users/seller/${listing.sellerId}?basic=true`);
                 setSeller(response.data.seller);
 
-                console.log("Seller Data:", response.data.seller);
+                // console.log("Seller Data:", response.data.seller);
             } catch (err) {
                 console.error('Failed to fetch seller details.');
                 console.log(err);
-            } finally {
-                setLoading(false);
             }
         }
 
@@ -74,9 +114,13 @@ export default function ListingDetails() {
         const fetchSellersOtherListings = async () => {
             try {
                 const response = await axios.get(`/api/v1/listings?seller=${listing.sellerId}&limit=8`);
-                setSellerListings(response.data.listings);
 
-                console.log("Seller's Other Listings:", response.data.listings);
+                // Exclude the current listing from seller's other listings
+                const filteredListings = response.data.listings.filter(item => item._id !== listingId);
+
+                setSellerListings(filteredListings);
+
+                // console.log("Seller's Other Listings:", response.data.listings);
             } catch (err) {
                 console.error('Failed to fetch seller\'s other listings.');
                 console.log(err);
@@ -90,24 +134,30 @@ export default function ListingDetails() {
         const fetchSimilarListings = async () => {
             try {
                 const response = await axios.get(`/api/v1/listings?category=${listing.category}&limit=8`);
-                setSimilarListings(response.data.listings);
 
-                console.log("Similar Listings:", response.data.listings);
+                // Exclude the current listing from similar listings
+                const filteredListings = response.data.listings.filter(item => item._id !== listingId);
+
+                setSimilarListings(filteredListings);
+
+                // console.log("Similar Listings:", response.data.listings);
             } catch (err) {
                 console.error('Failed to fetch similar listings.');
                 console.log(err);
+            } finally {
+                setLoading(false);
             }
         }
 
         // Only fetch if category is available
         if (listing.category) fetchSimilarListings();
-    }, [listingId, listing.sellerId]);
+    }, [listingId, listing.sellerId, listing.category]);
 
     return (
         <div className='listing-container'>
             <div className='listing-main-details'>
                 <div className='listing-images'>
-                    <img src='https://placehold.co/200x300'/>
+                    <img src={ listing.images.length > 0 ? listing.images[0] : `https://placehold.co/400?text=${listing.title}`}/>
                 </div>
                 <div className='listing-info'>
                     <div className='listing-title-seller'>
@@ -121,8 +171,9 @@ export default function ListingDetails() {
                         <p className='listing-price'>$ {listing.price.toFixed(2)}</p>
                         <button
                             className='cart-btn'
+                            onClick={handleCartAdd}
                         >
-                            Add to Cart
+                            {cartBtnLbl}
                         </button>
                     </div>
                 </div>
@@ -162,28 +213,34 @@ export default function ListingDetails() {
                     </div>
                 </div>
             </div>
-            <div className='seller-listings'>
-                <h2>More From Seller</h2>
-                <div className='listings-grid'>
-                    {
-                        sellerListings &&
-                        sellerListings.map((item) => (
-                            <ListingCard key={item._id} item={item} />
-                        ))
-                    }
+            {
+                sellerListings.length > 0 &&
+                <div className='seller-listings'>
+                    <h2>More From Seller</h2>
+                    <div className='listings-grid'>
+                        {
+                            sellerListings &&
+                            sellerListings.map((item) => (
+                                <ListingCard key={item._id} item={item} />
+                            ))
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className='similar-listings'>
-                <h2>Similar Listings</h2>
-                <div className='listings-grid'>
-                    {
-                        similarListings &&
-                        similarListings.map((item) => (
-                            <ListingCard key={item._id} item={item} />
-                        ))
-                    }
+            }
+            {
+                similarListings.length > 0 &&
+                <div className='similar-listings'>
+                    <h2>Similar Listings</h2>
+                    <div className='listings-grid'>
+                        {
+                            similarListings &&
+                            similarListings.map((item) => (
+                                <ListingCard key={item._id} item={item} />
+                            ))
+                        }
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

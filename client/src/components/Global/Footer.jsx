@@ -28,8 +28,7 @@ export const Footer = ({ isAuthenticated, username }) => {
                 <div className="footer-grid-item">
                     <h2>Shop</h2>
                     <Link to="/listings">All Products</Link>
-                    <Link to="/listings?sort=new">New Arrivals</Link>
-                    <Link to="/categories">Categories</Link>
+                    <Link to="/listings?page=1&sort=new">New Arrivals</Link>
                 </div>
                 <div className="footer-grid-item">
                     <h2>Sell</h2>
