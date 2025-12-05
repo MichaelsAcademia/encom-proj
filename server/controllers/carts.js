@@ -59,11 +59,55 @@ export const createCart = async (req, res) => {
 
 // Update cart
 export const updateCart = async (req, res) => {
+
+    const cartID = req.params.id;
+    const { userId } = req.query;
+
+    let cartbyId = null;
+    let cartbyUser = null;
+
     try {
-        const cart = await Cart.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (!cart) {
-            return res.status(400).json({ message: 'Cart not found' });
-        };
+        if (!mongoose.Types.ObjectId.isValid(cartID)) {
+            if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+
+                const cart = new Cart({ userId, items: [{
+                    listingId: itemId,
+                    quantity: quantity,
+                    priceAtAdd: price
+                }]});
+
+                await cart.save();
+                return res.status(200).json({
+                    message: "Cart created and item added",
+                    cart
+                });
+            }
+
+
+            cartbyUser = await Cart.findOne({ userId });
+
+            for (const item of req.body.items) {
+                const existingItem = cartbyUser.items.find(i => i.listingId.toString() === item.listingId);
+
+                if (existingItem) {
+                    existingItem.quantity += item.quantity;
+                    continue;
+                }
+
+                cartbyUser.items.push(item);
+            }
+
+            cartbyUser.updateOne({ items: req.body.items }, { upsert: true });
+
+            await cartbyUser.save();
+
+            return res.status(200).json({ cart: cartbyUser });
+        }
+
+        cartbyId = await Cart.findByIdAndUpdate(cartID, req.body, { new: true, upsert: true });
+
+        await cartbyId.save();
+
         res.status(200).json(cart);
     }catch (error) {
         res.status(500).json({ message: error.message });
@@ -74,6 +118,7 @@ export const updateCart = async (req, res) => {
 export const deleteCart = async (req, res) => {
     try {
         const cart = await Cart.findByIdAndDelete(req.params.id);
+
         if (!cart) {
             return res.status(400).json({ message: 'Cart not found' });
         }
@@ -104,12 +149,14 @@ export const removeItemFromCart = async (req, res) => {
 
 export const updateItemQuantity = async (req, res) => {
     const { userId, itemId } = req.params;
-    const { quantity } = req.body;
+    const { quantity, price } = req.body;
     try {
         const cart = await Cart.findOne({ userId });
+
         if (!cart) {
             return res.status(404).json({ message: "Cart not found" });
         }
+
         const item = cart.items.id(itemId);
         if (!item) {
             return res.status(404).json({ message: "Item not found in cart" });

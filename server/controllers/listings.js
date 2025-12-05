@@ -3,7 +3,13 @@ import Listing from "../models/listings.js";
 // ✅ GET /listings – Fetch all listings
 export const getListings = async (req, res) => {
 
-  const { limit = 0, offset = 0, category = null, seller = null } = req.query;
+  const {
+    limit = 0,
+    offset = 0,
+    category = null,
+    seller = null,
+    sort = false
+  } = req.query;
 
   try {
 
@@ -13,6 +19,7 @@ export const getListings = async (req, res) => {
     if (offset) query = query.skip(parseInt(offset));
     if (category) query = query.where('category').equals(category);
     if (seller) query = query.where('sellerId').equals(seller);
+    if (sort) query = query.sort({ createdAt: -1 });
 
     const listings = await query;
     const totalListings = await Listing.countDocuments();

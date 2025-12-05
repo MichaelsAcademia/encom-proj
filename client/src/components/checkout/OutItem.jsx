@@ -13,7 +13,7 @@ export default function OutItem({ item }) {
                 <p>{listingId?.title}</p>
                 <span>x{quantity}</span>
             </div>
-            <strong>${(priceAtAdd * item.quantity).toFixed(2)}</strong>
+            <strong>${priceAtAdd.toFixed(2)}</strong>
         </div>
     );
 }

@@ -23,7 +23,8 @@
 }
 
 .listing-main-details .listing-images img {
-    width: 100%;
+    width: auto;
+    max-width: 1500px;
     height: 100%;
     border-radius: 12px;
     object-fit: cover;

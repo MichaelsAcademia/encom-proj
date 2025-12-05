@@ -25,7 +25,7 @@ export default function ListingsPage() {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const response = await fetch(`/api/v1/listings?limit=${LISTINGS_PER_PAGE}&offset=${startingIndex - 1}`);
+                const response = await fetch(`/api/v1/listings?limit=${LISTINGS_PER_PAGE}&offset=${startingIndex - 1}&sort=${newSort}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch listings");
                 }
@@ -42,7 +42,7 @@ export default function ListingsPage() {
 
         fetchListings();
 
-        console.log(listings)
+        // console.log(listings)
     }, [startingIndex]);
 
     const handlePage = (invalid) => {
@@ -100,7 +100,6 @@ export default function ListingsPage() {
                     {">"}
                 </Link>
             </div>
-            {console.log("Rendering Listings Page - Page:", pageParam)}
         </div>
     )
 }

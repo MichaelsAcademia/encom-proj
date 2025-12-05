@@ -29,9 +29,6 @@ export default function ListingDetails({ user }) {
 
     const [cartBtnLbl, setCartBtnLbl] = useState("Add to Cart");
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
     const dateFormat = (dateString) => {
         const options = { day: 'numeric', month: '2-digit', year: 'numeric' };
         return new Date(dateString).toLocaleDateString("en-GB", options);
@@ -42,7 +39,13 @@ export default function ListingDetails({ user }) {
         const token = localStorage.getItem('encomToken');
 
         if (!user.id || !user.username || !user.email || !token) {
-            alert('Please log in to add items to your cart.');
+
+            setCartBtnLbl("Error, Please Login");
+
+            setTimeout(() => {
+                setCartBtnLbl("Add to Cart");
+            }, 2000);
+
             return;
         }
 
@@ -63,7 +66,11 @@ export default function ListingDetails({ user }) {
                 }
             );
 
-            console.log('Item added to cart:', response);
+            if (response.ok) {
+                throw new Error('Failed to add item to cart.');
+            }
+
+            // console.log('Item added to cart:', response);
 
             setCartBtnLbl("Added!");
 
@@ -72,7 +79,11 @@ export default function ListingDetails({ user }) {
             }, 2000);
         } catch (err) {
             console.error('Failed to add item to cart.');
-            console.log(err);
+            setCartBtnLbl("Error Adding to Cart");
+
+            setTimeout(() => {
+                setCartBtnLbl("Add to Cart");
+            }, 2000);
         }
     }
 
