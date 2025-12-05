@@ -11,6 +11,22 @@ export const getListings = async (req, res) => {
   }
 };
 
+// Get Popular Listings
+export const getPopularListings = async (req, res) => {
+  try {
+    const popularListings = await Listing.find().sort().limit(8).select("_id title price images");
+
+    if (!popularListings) {
+      return res.status(404).json({ message: "No popular listings found" });
+    }
+
+    res.status(200).json(popularListings);
+  } catch (error) {
+    console.error("❌ Error fetching popular listings:", error);
+    res.status(500).json({ message: "Error fetching popular listings", error: error.message });
+  }
+}
+
 // ✅ GET /listings/:id – Fetch single listing
 export const getListingById = async (req, res) => {
   try {

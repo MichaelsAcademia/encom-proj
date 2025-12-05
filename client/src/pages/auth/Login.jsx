@@ -40,7 +40,6 @@ export default function Login() {
     }
 
     if (queryEmail) {
-      console.log("Query email detected: ", queryEmail);
       // check if email matches regex
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(queryEmail)) {
@@ -69,8 +68,6 @@ export default function Login() {
     try {
       const response = await axios.post(`/api/v1/auth/check`, { email: form.email });
 
-      console.log(response.data);
-
       if (response.data.exists) {
         // email exists, navigate to login
         navigate(`/login?email=${form.email}`);
@@ -84,8 +81,6 @@ export default function Login() {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-
-    console.log("Logging in: ", { email: form.email, password: form.password });
 
     try {
       const response = await axios.post(`/api/v1/auth/login`, {
@@ -120,16 +115,12 @@ export default function Login() {
       return;
     }
 
-    console.log("Signing up: ", { username: form.username, email: form.email, password: form.password });
-
     try {
       const response = await axios.post(`/api/v1/auth/register`, {
         username: form.username,
         email: form.email,
         password: form.password
       });
-
-      console.log("Sign up response: ", response.data);
 
       const { user, token } = response.data;
 

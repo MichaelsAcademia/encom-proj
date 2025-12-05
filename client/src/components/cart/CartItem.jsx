@@ -6,15 +6,17 @@ export default function CartItem({ item, updateQuantity, removeItem }) {
 
             {/* PRODUCT IMAGE */}
             <img
-                src={item.listingId?.images?.[0] || "https://via.placeholder.com/100"}
+                src={item.listingId?.images?.[0] || "https://placehold.co/100?text=No+Image"}
                 alt={item.listingId?.title}
                 className="cart-item-img"
             />
 
             {/* PRODUCT DETAILS + CONTROLS */}
             <div className="cart-item-details">
-                <h3>{item.listingId?.title}</h3>
-                <p className="price-tag">${item.priceAtAdd.toFixed(2)}</p>
+                <div className="main">
+                    <h3>{item.listingId?.title}</h3>
+                    <p className="price-tag">${item.priceAtAdd.toFixed(2)}</p>
+                </div>
 
                 <div className="qty-controls">
                     <button onClick={() => updateQuantity(item._id, item.quantity - 1)}
@@ -27,7 +29,7 @@ export default function CartItem({ item, updateQuantity, removeItem }) {
                     </button>
 
                     <button className="remove-item-btn" onClick={() => removeItem(item._id)}>
-                        Remove
+                        Delete
                     </button>
                 </div>
             </div>

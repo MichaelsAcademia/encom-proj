@@ -1,59 +1,25 @@
-import "./Home.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
-// Dummy data for popular items
-const popularItems = [
-    {
-        id: 1,
-        title: "Margherita Pizza",
-        price: 12,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 2,
-        title: "Beef Tacos",
-        price: 9,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 3,
-        title: "Caesar Salad",
-        price: 8,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 4,
-        title: "Chicken Ramen",
-        price: 14,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 5,
-        title: "Cheeseburger",
-        price: 11,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 6,
-        title: "Sushi Platter",
-        price: 22,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 7,
-        title: "Pad Thai",
-        price: 13,
-        image: "https://placehold.co/300"
-    },
-    {
-        id: 8,
-        title: "Fish & Chips",
-        price: 15,
-        image: "https://placehold.co/300"
-    }
-];
+import "./Home.css";
+import ListingCard from "../../components/listingCard.jsx";
 
 export const Home = () => {
+    const [popularItems, setPopularItems] =  useState([]);
+
+    useEffect(() => {
+        // Fetch popular items from the backend API
+
+        const fetchPopularItems = async () => {
+            try {
+                const response = await axios.get("/api/v1/listings/popular");
+                setPopularItems(response.data);
+            } catch (error) {
+                console.error("Error fetching popular items:", error);
+            }
+        }
+        fetchPopularItems();
+    }, []);
 
     //This is just for the stats animation
     const statsRef = useRef(null);
@@ -88,11 +54,7 @@ export const Home = () => {
                     <h2 className="popular-title">Popular Items</h2>
                     <div className="popular-grid">
                         {popularItems.map((item) => (
-                            <div key={item.id} className="popular-item">
-                                <img src={item.image} />
-                                <h3>{item.title}</h3>
-                                <p>${item.price}</p>
-                            </div>
+                            <ListingCard key={item._id} item={item} />
                         ))}
                     </div>
                 </div>
