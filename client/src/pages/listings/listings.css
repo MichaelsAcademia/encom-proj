@@ -1,0 +1,102 @@
+.listings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 50px 65px;
+    min-height: 70vh;
+
+    font-size: 1.6rem;
+}
+
+.listings-header h3 {
+    font-size: 2.2rem;
+    font-weight: 500;
+}
+.listings-header p {
+    margin-top: 12px;
+}
+
+.listings-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.listings-header select {
+    font-size: 1.4rem;
+}
+
+.listings-header .filters {
+    display: flex;
+    gap: 10px;
+    margin: 10px auto;
+}
+
+.listings-header button {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 4px 15px;
+
+    align-items: center;
+
+    font-size: 1.4rem;
+    border: none;
+    background-color: #000000;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.listings-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem;
+}
+
+.listings-pagination {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    bottom: -10px;
+}
+
+.listings-pagination .page-button {
+    padding: 6px 12px;
+    font-size: 2rem;
+    color: black;
+    cursor: pointer;
+}
+
+.listings-pagination .page-button[data-disabled="true"] {
+    color: rgb(185, 185, 185);
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    margin-top: 30px;
+}
+.loading-spinner {
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid rgba(0,0,0,0.2);
+    border-top-color: black;
+    animation: spin 2s linear infinite;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* rotate animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}

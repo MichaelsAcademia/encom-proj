@@ -1,0 +1,29 @@
+.listing-item {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: .5rem;
+
+    color: black;
+
+}
+
+.listing-item h3 {
+    font-size: 2rem;
+    font-weight: 500;
+
+    margin-top: 0.5rem;
+}
+
+.listing-item p {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.listing-item img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+
+    border-radius: 8px;
+}

@@ -1,0 +1,70 @@
+.listing-edit-page {
+    padding: 50px 65px;
+    min-height: 80vh;
+
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 30px;
+}
+
+.listing-edit-page h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.listing-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.listing-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 20px;
+}
+
+.listing-form button {
+    font-size: 2.4rem;
+    font-weight: 600;
+
+    margin-top: 30px;
+    padding: 10px;
+    width: 30%;
+    cursor: pointer;
+
+    background: black;
+    color: white;
+
+    border-radius: 8px;
+}
+
+.listing-edit-page div {
+    display: flex;
+    width: 100%;
+
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listing-edit-page label {
+    font-size: 2.4rem;
+    font-weight: 600;
+
+    margin-top: 20px;
+    width: 50%;
+}
+
+.listing-edit-page input, .listing-edit-page textarea {
+    font-size: 2.4rem;
+    font-weight: 600;
+
+    margin-top: 20px;
+    padding: 10px;
+    width: 50%;
+
+    border: rgba(0, 0, 0, 0.1) 1px solid;
+}

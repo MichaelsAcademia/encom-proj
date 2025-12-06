@@ -1,4 +1,5 @@
 import Review from '../models/reviews.js'
+import User from '../models/users.js'
 
 
 //Get all Reviews
@@ -14,35 +15,38 @@ export const getAllReviews = async (req, res) => {
 
         if(!reviews || reviews.length ===0){
             return res.status(404).json({message: 'No reviews found'})
-        } res.status(200).json(reviews)}
-        catch (error){
-            res.status(500).json({message: error.message})
         }
+        res.status(200).json(reviews)
+    } catch (error){
+        res.status(500).json({message: error.message})
+    }
 }
 
 
 //Get reviews by ID
 export const getReviewById = async (req, res) => {
-    try{
+    try {
         const review = await Review.findById(req.params.id);
 
         if (!review){
             return res.status(404).json({message: 'Review not found'})
-        } res.status(200).json(review)}
-            catch (error){
-            res.status(500).json({message: error.message})
-            }
         }
+
+        res.status(200).json(review)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
 
 
 //Create Review
-    export const  createReview = async (req, res) => {
-        try {
-            const { reviewerId, sellerId, orderId, rating, comment} = req.body;
+export const  createReview = async (req, res) => {
+    try {
+        const { reviewerId, sellerId, orderId, rating, comment} = req.body;
 
-            if (!reviewerId || !sellerId || !orderId || rating == null){
-                res.status(400).json({message: 'Missing required fields. Please enter all required fields'})
-            }
+        if (!reviewerId || !sellerId || !orderId || rating == null){
+            res.status(400).json({message: 'Missing required fields. Please enter all required fields'})
+        }
 
         const newReview = new Review({
             reviewerId,
@@ -51,44 +55,55 @@ export const getReviewById = async (req, res) => {
             rating,
             comment
         })
-
         await newReview.save()
+
+        const seller = await User.findById(sellerId)
+        if (seller) {
+            const reviews = await Review.find({ sellerId: sellerId })
+            const totalRatings = reviews.reduce((sum, review) => sum + review.rating, 0)
+            const averageRating = totalRatings / reviews.length
+
+            seller.rating = averageRating
+
+            await seller.save()
+        }
+
         res.status(201).json(newReview)
-       } catch (error) {
+    } catch (error) {
         res.status(500).json({message: error.message})
-       }
     }
+}
 
 
 //Update Review
-    export const updatedReview = async (req, res) => {
-        try {
-        const updatedReview = await Review.findByIdAndUpdate(
-           req.params.id, req.body, {new: true}
-        )
+export const updatedReview = async (req, res) => {
+    try {
+    const updatedReview = await Review.findByIdAndUpdate(
+        req.params.id, req.body, {new: true}
+    )
 
-        if (!updatedReview){
-            return res.status(404).json({message: 'Review not found'})
-        }
-
-        res.status(200).json(updatedReview)
-        } catch (error) {
-        res.status(500).json({message: error.message})
-        }
+    if (!updatedReview){
+        return res.status(404).json({message: 'Review not found'})
     }
+
+    res.status(200).json(updatedReview)
+    } catch (error) {
+    res.status(500).json({message: error.message})
+    }
+}
 
 
 //Delete Review
-    export const deletedReview = async (req, res) => {
-        try{
-            const deletedReview = await Review.findByIdAndDelete(req.params.id);
+export const deletedReview = async (req, res) => {
+    try{
+        const deletedReview = await Review.findByIdAndDelete(req.params.id);
 
-        if(!deletedReview){
-            return res.status(404).json({message: 'Review not found'})
-        }
+    if(!deletedReview){
+        return res.status(404).json({message: 'Review not found'})
+    }
 
-        res.status(200).json({message: 'Review deleted successfully'})
-        } catch (error) {
-        res.status(500).json({message: error.message})
-        }
+    res.status(200).json({message: 'Review deleted successfully'})
+    } catch (error) {
+    res.status(500).json({message: error.message})
+    }
 }

@@ -1,0 +1,187 @@
+/* Phones */
+
+.nav {
+    position: sticky;
+    top: 0rem;
+    z-index: 2;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.nav-content {
+    padding: 2rem 1rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-main-group {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    gap: 2rem;
+}
+
+.nav-main-group p {
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    color: black;
+
+    margin-bottom: 5px;
+    margin-left: .5rem;
+}
+
+.nav-main-group p:nth-child(3) {
+    margin-left: -4px;
+    margin-right: -10px;
+}
+
+.logo {
+    color: var(--black);
+    font-size: 1rem;
+    align-items: center;
+}
+
+.logout-icon {
+    transform: rotate(180deg);
+}
+
+.nav-content-group {
+    flex: 1;
+    padding: 0rem 1rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    gap: 2rem;
+}
+
+.burger-bttn {
+    width: 3.5rem;
+    height: 3.5rem;
+    /* padding: 2rem; */
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 1rem;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+}
+
+.burger-bttn .line {
+    width: 100%;
+    height: 3px;
+
+    background-color: var(--black);
+    /* box-shadow: 2px 2px 1px var(--black); */
+}
+
+.nav-links-group {
+    display: none;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.search-item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 17rem;
+    height: 3.7rem;
+
+    border: 2px solid var(--black);
+    border-radius: 2rem;
+    outline: none;
+
+    font-size: 1.3rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+
+    color: var(--black);
+    font-size: 1.3rem;
+
+    pointer-events: none;
+}
+
+.nav-link-bttn {
+    min-width: 5rem;
+    width: auto;
+    height: 5rem;
+
+    padding: 1rem 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    background: none;
+
+    color: black;
+
+    cursor: pointer;
+}
+
+.nav-link-bttn p {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-left: 1rem;
+}
+
+.nav-link-bttn:hover {
+    border-bottom: 2px solid var(--black);
+}
+
+.btn-null:hover {
+    border-bottom: none;
+    cursor: default;
+}
+
+/* Large tablets or desktops */
+
+@media screen and (min-width: 800px) {
+    .nav-content {
+        padding: 2rem 6rem;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+
+    .burger-bttn {
+        display: none;
+    }
+
+    .nav-links-group {
+        display: flex;
+    }
+
+    .search-input {
+        width: 30rem;
+        padding: 1rem 1.5rem 1rem 4rem;
+
+        font-size: 1.6rem;
+    }
+
+    .search-icon {
+        left: 1.5rem;
+
+        font-size: 1.6rem;
+    }
+}

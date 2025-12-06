@@ -1,61 +1,66 @@
 import "./App.css";
-import { useState,  } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Navbar } from "./components/Navbar.jsx";
-import { MobileSideModal } from "./components/MobileSideModal.jsx";
-import { useAuth, AuthContext } from "./context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { Home } from "./pages/Home";
-import { Footer } from "./components/Footer";
+// AUTH
 import Login from "./pages/auth/Login";
+
+// HOME
+import { Home } from "./pages/home/Home";
+
+// GLOBAL
+import { Footer } from "./components/Global/Footer";
+import { Navbar } from "./components/Global/Navbar";
+
+// CART & CHECKOUT
 import CartPage from "./pages/cart/CartPage";
 import Checkout from "./pages/checkout/Checkout";
-import OrdersPage from "./pages/orders";
-import OrderDetails from "./pages/order-details";
-import ReviewsPage from "./pages/reviews";
+
+// ORDERS & REVIEWS
+import OrdersPage from "./pages/orders/orders";
+import OrderDetails from "./pages/orders/order-details";
+import ReviewsPage from "./pages/orders/reviews";
+
+// LISTINGS
+import Listings from "./pages/listings/listings";
+import ListingDetails from "./pages/listings/listing-details";
+
+// ACCOUNT LISTINGS
+import ListingEdit from "./pages/account/listing-edit";
+import ListingsList from "./pages/account/listings-list";
 
 export const App = () => {
-    const { user, logout } = useAuth();
+    const { user, logout, isAuthenticated } = useAuth();
 
     const location = useLocation().pathname.replace("/", "");
     const login = location === "login" || location === "signup";
 
-    console.log("location:", location);
-    console.log("in login?", login);
-
     const username = user ? user.username : null;
-
-    console.log(`Current user in Home: ${username}`);
-
-
-    const [isMobileSideModalOpen, setIsMobileSideModalOpen] = useState(false);
-    const handleMobileSideModal = () => {
-        setIsMobileSideModalOpen(!isMobileSideModalOpen);
-    }
 
     return (
         <div className="app">
-            {isMobileSideModalOpen && (
-                <MobileSideModal handleModal={handleMobileSideModal} user={user} logout={logout} />
-            )}
-
-            {!login && <Navbar handleMobileSideModal={handleMobileSideModal} user={user} logout={logout} />}
+            {!login && <Navbar user={user} logout={logout} />}
 
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Login />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/orders" element={<OrdersPage />} />
+                    <Route path="/cart" element={<CartPage user={user}/>} />
+                    <Route path="/checkout" element={<Checkout user={user}/>} />
+                    <Route path="/orders" element={<OrdersPage user={user} />} />
                     <Route path="/orders/:orderId" element={<OrderDetails />} />
-                    <Route path="/review" element={<ReviewsPage />} />
+                    <Route path="/review" element={<ReviewsPage user={user}/>} />
+                    <Route path="/listings" element={<Listings />}/>
+                    <Route path="/listing/:listingId" element={<ListingDetails user={user}/>}/>
+                    <Route path="/account/listings" element={<ListingsList user={user}/>} />
+                    <Route path="/account/listings/new" element={<ListingEdit user={user}/>} />
+                    <Route path="/account/listings/edit" element={<ListingEdit />} />
                 </Routes>
             </main>
 
-            {!login && <Footer />}
+            {!login && <Footer isAuthenticated={isAuthenticated} username={username} />}
         </div>
     );
 }
