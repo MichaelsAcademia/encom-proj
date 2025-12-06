@@ -148,6 +148,11 @@
     border-bottom: 2px solid var(--black);
 }
 
+.btn-null:hover {
+    border-bottom: none;
+    cursor: default;
+}
+
 /* Large tablets or desktops */
 
 @media screen and (min-width: 800px) {

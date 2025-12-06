@@ -13,8 +13,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "e2e": "cypress open"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -56,21 +55,5 @@
   "main": "babel.config.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFiles": [
-      "<rootDir>/src/tests/jest.setup.js"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleNameMapper": {
-      "\\.(css|less|scss|sass)$": "<rootDir>/src/tests/styleMock.js"
-    }
-  }
+  "license": "ISC"
 }

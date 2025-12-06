@@ -1,19 +1,34 @@
 import "./App.css";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { Navbar } from "./components/Global/Navbar";
 import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { Home } from "./pages/home/Home";
-import { Footer } from "./components/Global/Footer";
+// AUTH
 import Login from "./pages/auth/Login";
+
+// HOME
+import { Home } from "./pages/home/Home";
+
+// GLOBAL
+import { Footer } from "./components/Global/Footer";
+import { Navbar } from "./components/Global/Navbar";
+
+// CART & CHECKOUT
 import CartPage from "./pages/cart/CartPage";
 import Checkout from "./pages/checkout/Checkout";
+
+// ORDERS & REVIEWS
 import OrdersPage from "./pages/orders/orders";
 import OrderDetails from "./pages/orders/order-details";
 import ReviewsPage from "./pages/orders/reviews";
+
+// LISTINGS
 import Listings from "./pages/listings/listings";
 import ListingDetails from "./pages/listings/listing-details";
+
+// ACCOUNT LISTINGS
+import ListingEdit from "./pages/account/listing-edit";
+import ListingsList from "./pages/account/listings-list";
 
 export const App = () => {
     const { user, logout, isAuthenticated } = useAuth();
@@ -39,6 +54,9 @@ export const App = () => {
                     <Route path="/review" element={<ReviewsPage user={user}/>} />
                     <Route path="/listings" element={<Listings />}/>
                     <Route path="/listing/:listingId" element={<ListingDetails user={user}/>}/>
+                    <Route path="/account/listings" element={<ListingsList user={user}/>} />
+                    <Route path="/account/listings/new" element={<ListingEdit user={user}/>} />
+                    <Route path="/account/listings/edit" element={<ListingEdit />} />
                 </Routes>
             </main>
 

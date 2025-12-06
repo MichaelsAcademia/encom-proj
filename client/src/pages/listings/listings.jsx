@@ -3,7 +3,6 @@ import { Link, useSearchParams } from "react-router-dom";
 // import { XIcon, CaretDownIcon, CaretUpIcon } from "@phosphor-icons/react"; // Icons can be used for filters later
 import ListingCard from "../../components/listingCard";
 import "./listings.css";
-import { set } from "mongoose";
 
 export default function ListingsPage() {
     const [searchParams] = useSearchParams();

@@ -1,4 +1,5 @@
 import Listing from "../models/listings.js";
+import User from "../models/users.js";
 
 // ✅ GET /listings – Fetch all listings
 export const getListings = async (req, res) => {
@@ -65,8 +66,10 @@ export const createListing = async (req, res) => {
   try {
     const { title, description, price, category, images, quantity, sellerId } = req.body;
 
-    // fallback sellerId if not provided (for testing)
-    const validSellerId = sellerId || "000000000000000000000000";
+    const validSellerId = await User.findById(sellerId);
+    if (!validSellerId) {
+      return res.status(400).json({ message: "Invalid seller ID" });
+    }
 
     const newListing = await Listing.create({
       title,

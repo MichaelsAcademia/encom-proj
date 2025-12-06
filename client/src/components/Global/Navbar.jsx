@@ -39,6 +39,7 @@ export const Navbar = ({ user, logout }) => {
     const handleListings = (e) => {
         e.stopPropagation();
         console.log("Listing");
+        navigate("/account/listings");
     }
 
     const handleOrders = (e) => {
@@ -57,10 +58,14 @@ export const Navbar = ({ user, logout }) => {
                 </div>
 
                 <div className="nav-content-group">
+
+                    {/*
+                    No time to implement search functionality
                     <div className="search-item">
                         <span className="search-icon fa-solid fa-magnifying-glass"></span>
                         <input className="search-input" type="text" placeholder="Search" />
                     </div>
+                    */}
                     <div className="nav-links-group">
                         <button className="nav-link-bttn" onClick={() => navigate("/listings")}>
                             <StorefrontIcon size={26} weight="bold"/>
@@ -69,7 +74,7 @@ export const Navbar = ({ user, logout }) => {
                         {
                             isLoggedIn ? (
                             <>
-                                <button className="nav-link-bttn" onClick={handleAccount}>
+                                <button className="nav-link-bttn btn-null" onClick={handleAccount}>
                                     <UserIcon size={26} weight="bold"/>
                                     <p className="nav-text">{username}</p>
                                 </button>

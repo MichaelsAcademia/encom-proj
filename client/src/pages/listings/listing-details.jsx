@@ -26,6 +26,9 @@ export default function ListingDetails({ user }) {
     });
     const [sellerListings, setSellerListings] = useState([]);
     const [similarListings, setSimilarListings] = useState([]);
+    
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const [cartBtnLbl, setCartBtnLbl] = useState("Add to Cart");
 
