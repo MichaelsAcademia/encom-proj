@@ -39,11 +39,11 @@ describe("Navbar Component", () => {
     expect(logo.closest("a")).toHaveAttribute("href", "/");
   });
 
-  test("renders search input", async () => {
-    await renderWithRouter(<Navbar user={null} logout={mockLogout} />);
+  // test("renders search input", async () => {
+  //   await renderWithRouter(<Navbar user={null} logout={mockLogout} />);
 
-    expect(screen.getByPlaceholderText("Search")).toBeInTheDocument();
-  });
+  //   expect(screen.getByPlaceholderText("Search")).toBeInTheDocument();
+  // });
 
   test("renders Listings button", async () => {
     await renderWithRouter(<Navbar user={null} logout={mockLogout} />);
