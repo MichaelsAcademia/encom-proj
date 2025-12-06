@@ -83,15 +83,15 @@ export const Home = () => {
                 </div>
                 <div className="stats" ref={statsRef}>
                     <div className="stat-item">
-                        <h2>99.5%</h2>
+                        <h2>99.9%</h2>
                         <p>Satisfaction Rate</p>
                     </div>
                     <div className="stat-item">
-                        <h2>1000+</h2>
+                        <h2>500+</h2>
                         <p>Orders Fulfilled</p>
                     </div>
                     <div className="stat-item">
-                        <h2>500+</h2>
+                        <h2>100+</h2>
                         <p>Verified Sellers</p>
                     </div>
                 </div>

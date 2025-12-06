@@ -47,16 +47,49 @@ export const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Login />} />
-                    <Route path="/cart" element={<CartPage user={user}/>} />
-                    <Route path="/checkout" element={<Checkout user={user}/>} />
-                    <Route path="/orders" element={<OrdersPage user={user} />} />
-                    <Route path="/orders/:orderId" element={<OrderDetails />} />
-                    <Route path="/review" element={<ReviewsPage user={user}/>} />
                     <Route path="/listings" element={<Listings />}/>
                     <Route path="/listing/:listingId" element={<ListingDetails user={user}/>}/>
-                    <Route path="/account/listings" element={<ListingsList user={user}/>} />
-                    <Route path="/account/listings/new" element={<ListingEdit user={user}/>} />
-                    <Route path="/account/listings/edit" element={<ListingEdit />} />
+
+                    <Route path="/cart" element={
+                        <ProtectedRoute>
+                            <CartPage user={user}/>
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/checkout" element={
+                        <ProtectedRoute>
+                            <Checkout user={user}/>
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/orders" element={
+                        <ProtectedRoute>
+                            <OrdersPage user={user} />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/orders/:orderId" element={
+                        <ProtectedRoute>
+                            <OrderDetails />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/review" element={
+                        <ProtectedRoute>
+                            <ReviewsPage user={user}/>
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/account/listings" element={
+                        <ProtectedRoute>
+                            <ListingsList user={user}/>
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/account/listings/new" element={
+                        <ProtectedRoute>
+                            <ListingEdit user={user}/>
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/account/listings/edit" element={
+                        <ProtectedRoute>
+                            <ListingEdit />
+                        </ProtectedRoute>
+                    } />
                 </Routes>
             </main>
 
